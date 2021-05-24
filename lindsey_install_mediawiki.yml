@@ -6,9 +6,9 @@
   tasks:
 
 # UNZIP
-    - name: install unzip package
+    - name: install untar package
       package:
-        name: unzip
+        name: untar
         state: present
 
 # PHP
@@ -19,10 +19,8 @@
       loop:
         - php
         - php-mysql
-        - apache2-mod-php
         - php-xml
         - php-mbstring
-
 
 # MySQL
     - name: install mysql
