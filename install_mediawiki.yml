@@ -9,6 +9,7 @@
     - name: install unzip package
       package:
         name: unzip
+        state: present
 
 # UNTAR
     - name: install untar package
@@ -38,17 +39,12 @@
       args:
         creates: /root/.my.cnf
       register: mysql_new_root_pass
-      command: openssl rand -hex 10
-      args:
-        creates: /root/.my.cnf
-      register: mysql_new_root_pass
 
     - name: remove anonymous users
       mysql_user:
         name: ""
         state: absent
       when: mysql_new_root_pass.changed
-
 
     - name: remove test database
       mysql_db:
