@@ -62,7 +62,7 @@
         msg: "New root password is {{mysql_new_root_pass.stdout}}"
       when: mysql_new_root_pass.changed
 
-    - name: update root password
+#    - name: update root password
 
     - name: create my.cnf
       template:
