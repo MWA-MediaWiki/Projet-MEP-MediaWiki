@@ -4,16 +4,18 @@ apt upgrade
 apt install -y git apache2 mysql-server php
 php -version
 mysql -version
-mysql --version
 apache2 -version
 cd /home
 git clone --branch develop https://github.com/Bubu25/Projet-MEP-MediaWiki.git
 cd /var/lib
 
 mkdir wiki
-tar xvzf /home/INPUT/PACKAGE/wikidevops.tar.gz
-tar xzvf /home/INPUT/PACKAGE/dump_image.tar.gz
-tar xzvf /home/INPUT/PACKAGE/LoGo.tar.gz
+cd wiki
+tar xvzf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/wikidevops.tar.gz
+tar xzvf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/dump_image.tar.gz
+tar xzvf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/LoGo.tar.gz
+mv /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/Donnees.xml /var/lib/wiki/
+
 
 echo "CREATE DATABASE wikiFV;" | mysql -u root
 echo "CREATE USER 'userwiki'@localhost IDENTIFIED BY 'az';" | mysql -u root
@@ -21,10 +23,9 @@ echo "GRANT ALL PRIVILEGES ON wikiFV.* TO 'userwiki'@localhost;" | mysql -u root
 
 ln -s /var/lib/wiki/wikidevops /var/www/html
 apt install -y php-xml php-mbstring php-mysql
-phpenmod xml
-phpenmod mbstring
 systemctl restart apache2
 
+cd /var/lib/wiki/wikidevops/maintenance
 php install.php --dbname wikiFV --dbuser userwiki --dbpass az --dbserver localhost --server http://192.168.1.9/ --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /var/lib/wiki/wikidevops wikiFV admin
 php importDump.php --wiki wikiFV --server http://192.168.1.9 --dbuser userwiki --dbpass az /var/lib/wiki/Donnees.xml
 php rebuildrecentchanges.php
@@ -32,6 +33,6 @@ php initSiteStats.php
 php importImages.php --wiki wikiFV --server http://192.168.1.9/ --dbuser userwiki --dbpass az /var/lib/wiki/images
 
 mv /var/lib/wiki/LoGo/GRA-135.png /var/lib/wiki/wikidevops/resources/assets
-cat /var/lib/wiki/wikidevops/ | sed -e 's/wiki\.png/GRA-135\.png/' LocalSettings.php
-
+cd /var/lib/wiki/wikidevops/ | sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php
+systemctl restart apache2
 exit 0
