@@ -1,0 +1,35 @@
+#!/bin/bash
+apt update
+apt upgrade
+apt install -y git apache2 mysql-server php php-xml php-mbstring php-mysql
+php -version
+mysql -version
+apache2 -version
+cd /home
+git clone --branch develop https://github.com/Bubu25/Projet-MEP-MediaWiki.git
+cd /home
+mkdir -p appli/MWA_mediawiki/LIVR/01.00.00
+cd /home/appli/MWA_mediawiki/LIVR/01.00.00
+tar xvzf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/wikidevops.tar.gz
+tar xzvf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/dump_image.tar.gz
+tar xzvf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/LoGo.tar.gz
+mv /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/Donnees.xml /home/appli/MWA_mediawiki/LIVR/01.00.00
+
+echo "CREATE DATABASE wikiFV;" | mysql -u root
+echo "CREATE USER 'userwiki'@localhost IDENTIFIED BY 'az';" | mysql -u root
+echo "GRANT ALL PRIVILEGES ON wikiFV.* TO 'userwiki'@localhost;" | mysql -u root
+
+ln -s /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops /var/www/html
+systemctl restart apache2
+
+cd /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/maintenance
+php install.php --dbname wikiFV --dbuser userwiki --dbpass az --dbserver localhost --server http://192.168.1.9/ --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops wikiFV admin
+php importDump.php --wiki wikiFV --server http://192.168.1.9 --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/01.00.00/Donnees.xml
+php rebuildrecentchanges.php
+php initSiteStats.php
+php importImages.php --wiki wikiFV --server http://192.168.1.9/ --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/01.00.00/images
+
+mv /home/appli/MWA_mediawiki/LIVR/01.00.00/LoGo/GRA-135.png /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/resources/assets
+cd /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/ | sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php
+systemctl restart apache2
+exit 0
