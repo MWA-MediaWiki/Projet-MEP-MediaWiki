@@ -23,6 +23,7 @@
         - php-xml
         - php-mbstring
 
+
 # MySQL
     - name: install mysql
       package:
@@ -87,7 +88,7 @@
         dest: /var/lib/mediawiki
         remote_src: ?!?
         creates: ?!?
-        
+
 # HANDLERS
   handlers:
     - name: restart apache2
