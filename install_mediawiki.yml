@@ -23,10 +23,13 @@
         - php-mbstring
 
 # MySQL
-    - name: install mysql-python
+    - name: Install MySQL
       package:
-        name: MySQL-python
+        name: "{{ item }}"
         state: present
+      loop:
+        - mysql-server
+        - python3-mysqldb
 
     - name: generate new root password
       command: openssl rand -hex 10
