@@ -5,7 +5,7 @@
   hosts: mediawiki
   tasks:
 
-# UNZIP
+# UNTAR
     - name: install untar package
       package:
         name: untar
@@ -80,7 +80,7 @@
         dest: /tmp/mediawiki-1.35.2.tar.gz
         checksum: ?!?
 
-    - name: unzip mediawiki
+    - name: untar mediawiki
       unarchive:
         src: /tmp/mediawiki-1.35.2.tar.gz
         dest: /var/lib/mediawiki
