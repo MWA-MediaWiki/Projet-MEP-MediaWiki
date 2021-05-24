@@ -1,7 +1,7 @@
 #!/bin/bash
 apt update
 apt upgrade
-apt install -y git apache2 mysql-server php
+apt install -y git apache2 mysql-server php php-xml php-mbstring php-mysql
 php -version
 mysql -version
 apache2 -version
@@ -22,7 +22,6 @@ echo "CREATE USER 'userwiki'@localhost IDENTIFIED BY 'az';" | mysql -u root
 echo "GRANT ALL PRIVILEGES ON wikiFV.* TO 'userwiki'@localhost;" | mysql -u root
 
 ln -s /var/lib/wiki/wikidevops /var/www/html
-apt install -y php-xml php-mbstring php-mysql
 systemctl restart apache2
 
 cd /var/lib/wiki/wikidevops/maintenance
