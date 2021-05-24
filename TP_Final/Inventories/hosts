@@ -1,0 +1,4 @@
+MWA-server ansible_host=192.168.56.105 ansible_user=webadmin become=yes
+
+[mediawiki]
+MWA-server
