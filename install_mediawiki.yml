@@ -6,15 +6,9 @@
   tasks:
 
 # UNZIP
-#    - name: install unzip package
-#      package:
-#        name: unzip
-#        state: present
-
-# UNTAR
-    - name: install untar package
+    - name: install unzip package
       package:
-        name: untar
+        name: unzip
         state: present
 
 # PHP
