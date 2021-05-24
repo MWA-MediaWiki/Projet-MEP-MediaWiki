@@ -2,7 +2,7 @@
 
 - name : installation de mediawiki
   become: true
-  hosts: mediawiki
+  hosts: MWA-server
   tasks:
 
 #APT-UPDATE et UPGRADE
