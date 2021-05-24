@@ -29,22 +29,22 @@
         state: present
 
     - name: generate new root password
-#      command: openssl rand -hex 10
+      command: openssl rand -hex 10
       args:
-#        creates: /root/.my.cnf
-#      register: mysql_new_root_pass
+        creates: /root/.my.cnf
+      register: mysql_new_root_pass
 
     - name: remove anonymous users
       mysql_user:
         name: ""
         state: absent
-#      when: mysql_new_root_pass.changed
+      when: mysql_new_root_pass.changed
 
     - name: remove test database
       mysql_db:
         name: test
         state: absent
-#      when: mysql_new_root_pass.changed
+      when: mysql_new_root_pass.changed
 
     - name: output new root password
       debug:
