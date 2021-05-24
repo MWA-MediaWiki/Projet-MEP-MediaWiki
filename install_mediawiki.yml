@@ -5,10 +5,17 @@
   hosts: mediawiki
   tasks:
 
+<<<<<<< Updated upstream
 # UNZIP
     - name: install unzip package
       package:
         name: unzip
+=======
+# UNTAR
+    - name: install untar package
+      package:
+        name: untar
+>>>>>>> Stashed changes
         state: present
 
 # PHP
@@ -19,11 +26,17 @@
       loop:
         - php
         - php-mysql
+<<<<<<< Updated upstream
         - apache2-mod-php
         - php-xml
         - php-mbstring
 
 
+=======
+        - php-xml
+        - php-mbstring
+
+>>>>>>> Stashed changes
 # MySQL
     - name: install mysql
       package:
@@ -31,22 +44,37 @@
         state: present
 
     - name: generate new root password
+<<<<<<< Updated upstream
 #      command: openssl rand -hex 10
       args:
 #        creates: /root/.my.cnf
 #      register: mysql_new_root_pass
+=======
+      command: openssl rand -hex 10
+      args:
+        creates: /root/.my.cnf
+      register: mysql_new_root_pass
+>>>>>>> Stashed changes
 
     - name: remove anonymous users
       mysql_user:
         name: ""
         state: absent
+<<<<<<< Updated upstream
 #      when: mysql_new_root_pass.changed
+=======
+      when: mysql_new_root_pass.changed
+>>>>>>> Stashed changes
 
     - name: remove test database
       mysql_db:
         name: test
         state: absent
+<<<<<<< Updated upstream
 #      when: mysql_new_root_pass.changed
+=======
+      when: mysql_new_root_pass.changed
+>>>>>>> Stashed changes
 
     - name: output new root password
       debug:
@@ -82,7 +110,11 @@
         dest: /tmp/mediawiki-1.35.2.tar.gz
         checksum: ?!?
 
+<<<<<<< Updated upstream
     - name: unzip mediawiki
+=======
+    - name: untar mediawiki
+>>>>>>> Stashed changes
       unarchive:
         src: /tmp/mediawiki-1.35.2.tar.gz
         dest: /var/lib/mediawiki
