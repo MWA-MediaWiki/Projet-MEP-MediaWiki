@@ -1,0 +1,120 @@
+---
+
+- name : installation de mediawiki
+  become: true
+  hosts: mediawiki
+  tasks:
+
+#APT-UPDATE et UPGRADE
+    - name: Update and upgrade apt packages
+      become: true
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+# UNZIP
+    - name: install gtar package
+      package:
+        name: gtar
+        state: present
+
+# PHP
+    - name: install php
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - git
+        - php
+        - php-mysql
+        - php-xml
+        - php-mbstring
+
+# MySQL
+    - name: install mysql
+      package:
+        name: mysql-server
+        state: present
+
+    - name: generate new root password
+      command: openssl rand -hex 10
+      args:
+        creates: /root/.my.cnf
+      register: mysql_new_root_pass
+
+    - name: remove anonymous users
+      mysql_user:
+        name: ""
+        state: absent
+      when: mysql_new_root_pass.changed
+
+    - name: remove test database
+      mysql_db:
+        name: test
+        state: absent
+      when: mysql_new_root_pass.changed
+
+    - name: output new root password
+      debug:
+        msg: "New root password is {{ mysql_new_root_pass.stdout }}"
+      when: mysql_new_root_pass.changed
+
+    - name: update root password
+      mysql_user:
+        name: root
+        host: "{{ item }}"
+        password: "{{ my_new_root_pass.stdout }}"
+      loop:
+        - "{{ ansible_hostname }}"
+        - 127.0.0.1
+        - ::1
+        - localhost
+      when: my_sql_new_root_pass.changed
+
+    - name: create my.cnf
+      template:
+        src: templates/mysql/my.cnf.j2
+        dest: /root/.my.cnf
+      when: mysql_new_root_pass.changed
+
+# APACHE
+    - name: install apache
+      package:
+        name: apache2
+        state: present
+
+    - name: create apache2 config
+      template:
+        src: templates/apache2/default.j2
+        dest: /etc/apache2/sites-available/default
+      notify: restart apache2
+
+    - name: create project folder
+
+    #GIT
+    - name: Git clone de la branche develop
+      git:
+        repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
+        single_branch: yes
+        branch: develop
+        dest: /home
+        
+    - name: untar package
+      unarchive:
+        src: /home/Projet-MEP-MediaWiki/"{{ item }}"
+        loop:
+          - wikidevops.tar.gz
+          - dump_image.tar.gz
+          - LoGo.tar.gz
+          - Relivraison_24052021.tar.gz
+        dest: /var/lib/mediawiki
+        remote_src: yes
+        creates: ?!?
+
+# HANDLERS
+  handlers:
+    - name: restart apache2
+      service:
+        name: apache2
+        state : restarted
+
