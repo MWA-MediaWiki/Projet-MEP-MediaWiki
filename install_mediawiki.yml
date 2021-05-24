@@ -6,10 +6,10 @@
   tasks:
 
 # UNZIP
-    - name: install unzip package
-      package:
-        name: unzip
-        state: present
+#    - name: install unzip package
+#      package:
+#        name: unzip
+#        state: present
 
 # UNTAR
     - name: install untar package
