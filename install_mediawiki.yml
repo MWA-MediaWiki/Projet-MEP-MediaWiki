@@ -107,7 +107,6 @@
       lineinfile:
         dest: /etc/mysql/mysql.conf.d/mysqld.cnf
         regexp: '^# datadir       = /var/lib/mysql'
-        insertafter: '^# datadir       = /var/lib/mysql'
         line: 'datadir     = /mnt/log/mysql'
 
 
