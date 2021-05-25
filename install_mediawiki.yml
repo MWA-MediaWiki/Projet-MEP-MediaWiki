@@ -95,12 +95,25 @@
       service:
         name: mysql
         state: stopped
+
+    - synchronize:
+        src: /var/lib/mysql
+        dest: /mnt/log
+
+
+    - name: stat mysql
+        stat: path=/var/lib/mysql/
+        register: mysql_stat
+
+    - name: backup mysql
+      command: mv /var/lib/mysql/ /var/lib/mysql.bak/
+      when: mysql_stat.stat.exists
+
       
     - name : create directory FS
       file:
         path: /mnt/log
         state: directory
-
 
 
     - name: "edit mysql.conf"
@@ -129,7 +142,8 @@
       service:
         name: mysql
         state: restarted
-              
+
+
 # HANDLERS
   handlers:
     - name: restart apache2
