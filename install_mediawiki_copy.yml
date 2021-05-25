@@ -170,7 +170,7 @@
     - name: création du lien symbolique
       file:
         src: /home/appli/MWA_mediawiki/LIVR/wikidevops
-        dest: /var/www/html/mediawiki
+        dest: /var/www/html/wikidevops
         state: link
       notify: restart apache2
 
