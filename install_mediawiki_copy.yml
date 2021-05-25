@@ -133,8 +133,6 @@
     - name: git repo
       ansible.builtin.git:
         repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
-        single_branch: yes
-        branch: master
         dest: /home/lindsey/projet
 
     - name: untar package
