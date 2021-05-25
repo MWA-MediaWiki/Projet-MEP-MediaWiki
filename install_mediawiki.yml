@@ -132,8 +132,8 @@
       unarchive:
         src: /home/appli/MWA_mediawiki/LIVR
         dest: /home/appli/MWA_mediawiki/LIVR2
-      command: "tar xvzf wikidevops.tar.gz"
-      remote_src: yes
+        command: "tar xvzf wikidevops.tar.gz"
+        remote_src: yes
 
     - name: untar mediawiki
       unarchive:
