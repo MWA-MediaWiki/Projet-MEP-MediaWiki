@@ -91,7 +91,7 @@
 
 # deplacement de la base de donnée
     
-    - name: "stop mysql service"v 
+    - name: "stop mysql service"
       service:
         name: mysql
         state: stopped
