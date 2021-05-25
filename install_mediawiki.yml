@@ -97,11 +97,21 @@
 #        single_branch: yes
 #        dest: /home/lindsey/projet
 
+    - name : directory appli
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /home/appli
+        - /home/appli/MWA_mediawiki
+        - /home/appli/MWA_mediawiki/LIVR
+        - /home/appli/MWA_mediawiki/LIVR/01.00.00
+
     - name: git repo
       uri:
         url: "{{ item }}"
         return_content: true
-        dest: /home/lindsey/test
+        dest: /home/appli/MWA_mediawiki/LIVR
       loop:
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/tree/Lyndsey-develop/INPUT/PACKAGE/wikidevops.tar.gz
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/tree/Lyndsey-develop/INPUT/PACKAGE/dump_image.tar.gz
