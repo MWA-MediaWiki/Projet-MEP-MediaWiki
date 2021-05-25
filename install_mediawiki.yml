@@ -127,7 +127,6 @@
         - /home/appli/MWA_mediawiki/LIVR/wikidevops.tar.gz
         - /home/appli/MWA_mediawiki/LIVR/dump_image.tar.gz
         - /home/appli/MWA_mediawiki/LIVR/LoGo.tar.gz
-        - /home/appli/MWA_mediawiki/LIVR/Relivraison_24052021.tar.gz
       #register: wp_checksum
 
 #    - name: untar mediawiki
