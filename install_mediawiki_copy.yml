@@ -140,7 +140,7 @@
 
     - name: move Données
       copy:
-        src: /home/appli/MWA_mediawiki/LIVR/Données.xml
+        src: /home/appli/MWA_mediawiki/LIVR/Donnees.xml
         dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
         remote_src: yes
 
