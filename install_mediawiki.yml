@@ -90,16 +90,19 @@
 #    - name: create project folder
 
 # deplacement de la base de donnée
-    - name: "stop mysql service"
+    
+    - name: "stop mysql service"v 
       service:
         name: mysql
         state: stopped
       
-    - name : directory appli
+    - name : create directory FS
       file:
         path: /mnt/log
         state: directory
-  
+
+    - name: backup mysql
+      command: mv /var/lib/mysql /var/lib/mysql.bak
 
 # HANDLERS
   handlers:
