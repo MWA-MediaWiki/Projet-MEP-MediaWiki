@@ -178,11 +178,11 @@
     - name: install par script
       command: "{{ item }}"
       loop:
-        - "php install.php --dbname wikiFV --dbuser userwiki --dbpass az --dbserver localhost --server 'http://192.168.56.102/' --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiFV admin"
-        - "php importDump.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
+        - "php install.php --dbname wikiFV --dbuser userwiki --dbpass az --dbserver localhost --server "http://192.168.56.102/" --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiFV admin"
+        - "php importDump.php --wiki wikiFV --server "http://192.168.56.102" --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
-        - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
+        - "php importImages.php --wiki wikiFV --server "http://192.168.56.102" --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
