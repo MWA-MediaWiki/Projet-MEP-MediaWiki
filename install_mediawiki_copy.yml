@@ -6,10 +6,16 @@
   tasks:
 
 #APT-UPDATE et UPGRADE
-    - name: Update and upgrade apt packages
+# UPDATE
+    - name: update
+    apt:
+        name: ""
+        state: latest
+# UPGRADE
+    - name: upgrade
       apt:
-        upgrade: yes
-        update_cache: yes
+        name: ""
+        state: latest
 
 # UNZIP
  #   - name: install untar package
