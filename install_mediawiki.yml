@@ -129,18 +129,24 @@
         - /home/appli/MWA_mediawiki/LIVR/LoGo.tar.gz
       #register: wp_checksum
 
-    - name: Create Mediawiki MySQL database
+    - name: création BD mediawiki (mySQL)
       mysql_db:
         name: wikiLin
         state: present
 
-    - name: Create MediaWiki mysql user
+    - name: création user mediaWiki (mysql)
       mysql_user:
         name: userLin
         host: localhost
         password: userLin
         priv: userLin.*:ALL
 
+    - name: création du lien symbolique
+      file:
+        src: /home/lindsey/Projet-MEP-MediaWiki/INPUT/PACKAGE/wikidevops/
+        dest: /var/www/html
+        state: link
+      notify: apache2 reload
 
 #    - name: untar mediawiki
 #      unarchive:
