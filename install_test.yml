@@ -208,10 +208,6 @@
       command: "{{ item }}"
       loop:
         - "php install.php --dbuser=userwiki --dbpass=password --dbname=wikidb --dbserver=localhost --dbtype=mysql --scriptpath=/wikidevops --confpath=/home/appli/MWA_mediawiki/LIVR/wikidevops  --server='http://192.168.1.26/'' --lang=fr --pass=azerty123admin mediawiki admin"
-        - "php importDump.php --wiki mediawiki --server http://192.168.1.26/ --dbuser userwiki --dbpass password  /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
-        - "php rebuildrecentchanges.php"
-        - "php initSiteStats.php"
-        - "php importImages.php --wiki mediawiki --server 'http://192.168.1.26' --dbuser userwiki --dbpass password /home/appli/MWA_mediawiki/LIVR/wikidevops/images"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
