@@ -120,6 +120,10 @@
         name: apparmor
         state: restarted
 
+    - name : create directory structure mysql
+      file:
+        path: /var/lib/mysql/mysql
+        state: directory
 
       
 # HANDLERS
