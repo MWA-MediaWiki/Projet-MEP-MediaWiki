@@ -106,7 +106,7 @@
     - name: "edit mysql.conf"
       lineinfile:
         dest: /etc/mysql/mysql.conf.d/mysqld.cnf
-        regexp: '^# datadir       = /var/lib/mysql'
+        regexp: '^# datadir       = /var/lib/mysql$'
         line: 'datadir     = /mnt/log/mysql'
 
 
