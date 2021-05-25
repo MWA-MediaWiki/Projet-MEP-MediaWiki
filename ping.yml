@@ -1,0 +1,7 @@
+---
+
+- name : Test ping
+  hosts: mediawiki
+  tasks:
+  - name: ping
+    ping:
