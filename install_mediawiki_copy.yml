@@ -44,12 +44,6 @@
         - mysql-server
         - python3-mysqldb
 
-    - name: create my.cnf
-      template:
-        src: templates/mysql/my.cnf.j2
-        dest: /root/.my.cnf
-      when: mysql_new_root_pass.changed
-      
     - name: generate new root password
       command: openssl rand -hex 10
       args:
@@ -73,6 +67,8 @@
         msg: "New root password is {{ mysql_new_root_pass.stdout }}"
       when: mysql_new_root_pass.changed
 
+     
+
     - name: update root password
       mysql_user:
         name: root
@@ -85,7 +81,11 @@
         - localhost
       when: my_sql_new_root_pass.changed
 
-
+    - name: create my.cnf
+      template:
+        src: templates/mysql/my.cnf.j2
+        dest: /root/.my.cnf
+      when: mysql_new_root_pass.changed 
 
 # APACHE
     - name: install apache
