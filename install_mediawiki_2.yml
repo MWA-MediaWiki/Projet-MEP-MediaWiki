@@ -173,12 +173,6 @@
     - name: sed
       shell: sed -i 's/wiki\.png/GRA-135\.png/' /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
 
-    - name: create LocalSetting
-      template:
-        src: templates/mediawiki/LocalSettings.php
-        dest: /home/appli/MWA_mediawiki/LIVR/LocalSettings.php
-      notify: restart apache2
-
       #   - name: create LocalSetting
    #   template:
     #    src: templates/mediawiki/LocalSettings.php
