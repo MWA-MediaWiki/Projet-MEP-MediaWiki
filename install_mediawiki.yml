@@ -129,6 +129,19 @@
         - /home/appli/MWA_mediawiki/LIVR/LoGo.tar.gz
       #register: wp_checksum
 
+    - name: Create Mediawiki MySQL database
+      mysql_db:
+        name: mediawiki
+        state: present
+
+    - name: Create MediaWiki mysql user
+      mysql_user:
+        name: MediaWiki
+        host: localhost
+        password: bananas
+        priv: mediawiki.*:ALL
+
+
 #    - name: untar mediawiki
 #      unarchive:
 #        src: /tmp/mediawiki-1.35.2.tar.gz
