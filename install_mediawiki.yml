@@ -106,7 +106,8 @@
         group: mysql
         mode: '0700'
   
-
+    - name: backup mysql
+      command: mv /var/lib/mysql/ /var/lib/mysql.bak/
       
     - name : create directory in File System
       file:
@@ -136,6 +137,11 @@
         path: /var/lib/mysql/mysql
         state: directory
       notify: restart mysql
+
+    - name: Remove directory
+      file:
+        path: /var/lib/mysql.bak
+        state: absent
     
 
 
