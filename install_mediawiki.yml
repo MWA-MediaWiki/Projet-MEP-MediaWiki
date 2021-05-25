@@ -91,7 +91,7 @@
 
 # MEDIAWIKI
     - name: git clone du projet mediawiki
-      git:
+      clone:
         repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
         single_branch: yes
         branch: Lyndsey-develop
