@@ -90,6 +90,12 @@
 #    - name: create project folder
 
 # deplacement de la base de donnée
+
+    - name : create directory in File System
+      file:
+        path: /mnt/log
+        state: directory
+
     
     - name: "stop mysql service"
       service:
@@ -109,10 +115,6 @@
     - name: backup mysql
       command: mv /var/lib/mysql/ /var/lib/mysql.bak/
       
-    - name : create directory in File System
-      file:
-        path: /mnt/log
-        state: directory
 
     - name: "edit mysql.conf"
       lineinfile:
