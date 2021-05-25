@@ -97,7 +97,7 @@
         state: stopped
 
     - name: Copy file with owner and permissions
-        ansible.builtin.copy:
+      ansible.builtin.copy:
         src: /var/lib/mysql
         dest: /mnt/log
         owner: mysql
