@@ -104,6 +104,12 @@
     - name: backup mysql
       command: mv /var/lib/mysql /var/lib/mysql.bak
 
+    - name: "edit mysql.conf"
+      lineinfile:
+        dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^#datadir       = /var/lib/mysql'
+        line: 'datadir     = /mnt/log/mysql'
+      
 # HANDLERS
   handlers:
     - name: restart apache2
