@@ -84,7 +84,18 @@
       when: mysql_new_root_pass.changed
 
 
+    #Création bdd et user
+    - name: Create MySQL DB
+      mysql_db:
+        name: wikiFV
+        state: present
 
+    - name: Create MySQL user
+      mysql_user:
+        name: userwiki
+        host: localhost
+        password: az
+        priv: wikidb.*:ALL
 
 
     # deplace directory mysql
@@ -193,10 +204,6 @@
         state: link
       notify: restart apache2
 
-    - name: install par script
-      command: "{{ item }}"
-      loop:
-       - "php install.php --dbname wikidb --dbuser userwiki --dbpass password --dbserver localhost --server 'http://192.168.1.26' --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiFV admin"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
