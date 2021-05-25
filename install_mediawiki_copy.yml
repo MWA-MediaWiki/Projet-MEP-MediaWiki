@@ -175,9 +175,7 @@
         - "php initSiteStats.php"
 <<<<<<< Updated upstream
         - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
-=======
         - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images/Devops.png"
->>>>>>> Stashed changes
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
