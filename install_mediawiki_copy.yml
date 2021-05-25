@@ -134,7 +134,7 @@
     - name: git repo
       ansible.builtin.git:
         repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
-        dest: /home/appli/MWA_mediawiki/LIVR/01.00.00
+        dest: /home/appli/MWA_mediawiki/LIVR
 
     - name: untar package
       unarchive:
