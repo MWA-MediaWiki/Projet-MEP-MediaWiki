@@ -122,6 +122,13 @@
         - /tmp/LoGo.tar.gz
         - /tmp/Relivraison_24052021.tar.gz        
         #creates: yes
+    - name : directory image
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /home/appli/MWA_mediawiki/LIVR/wikidevops/images/2
+        - /home/appli/MWA_mediawiki/LIVR/wikidevops/images/2/21
 
     - name: move Données
       copy:
@@ -132,7 +139,7 @@
     - name: move image
       copy:
         src: /home/appli/MWA_mediawiki/LIVR/images/DevOps.png
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/images
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/images/2/21
         remote_src: yes       
 
     - name: chmod
