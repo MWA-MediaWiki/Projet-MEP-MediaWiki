@@ -163,7 +163,7 @@
         state: absent
    
 
-       - name : directory appli
+    - name : directory appli
       file:
         path: "{{ item }}"
         state: directory
