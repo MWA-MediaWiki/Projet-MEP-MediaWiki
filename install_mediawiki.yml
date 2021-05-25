@@ -151,7 +151,7 @@
     - name: installation via install.php
       command: "{{ item }}"
       loop:
-        - "php install.php --dbname my_wiki --dbuser new_mysql_user --dbpass lindsey --dbserver localhost --server http://192.168.56.115 --dbtype mysql --wiki mediawiki –pass azerty123admin --lang en --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops mediawiki admin"
+        - "php install.php --dbname my_wiki --dbuser new_mysql_user --dbpass lindsey --dbserver localhost --server http://192.168.56.115 --dbtype mysql --wiki mediawiki -–pass azerty123admin --lang en --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops mediawiki admin"
         - "php importDump.php --wiki mediawiki --server http://192.168.56.115 --dbuser new_mysql_user --dbpass lindsey --debug /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
