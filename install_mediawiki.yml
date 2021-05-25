@@ -18,10 +18,10 @@
         state: latest
 
 # UNZIP
-    - name: install unzip package
-      package:
-        name: unzip
-        state: present
+#    - name: install unzip package
+#      package:
+#        name: unzip
+#        state: present
 
 # PHP et GIT
     - name: install php et git
