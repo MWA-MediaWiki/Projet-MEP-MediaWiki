@@ -146,7 +146,7 @@
         src: /home/appli/MWA_mediawiki/LIVR/wikidevops/
         dest: /var/www/html/wikidevops
         state: link
-      notify: apache2 reload
+      notify: restart apache2
 
 #    - name: untar mediawiki
 #      unarchive:
