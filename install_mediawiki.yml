@@ -89,17 +89,12 @@
 #    - name: create project folder
 
 # MEDIAWIKI
-    - name: download mediawiki
+    - name: git clone du projet mediawiki
       git:
         repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
         single_branch: yes
         branch: Lyndsey-develop
         dest: /home
-#    - name: download mediawiki
-#      get_url:
-#        url: https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz
-#        dest: /tmp/mediawiki-1.35.2.tar.gz
-#        checksum: ?!?
 
     - name: untar mediawiki
       unarchive:
