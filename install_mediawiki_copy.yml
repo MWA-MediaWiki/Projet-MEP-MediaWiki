@@ -140,8 +140,8 @@
 
     - name: move Données
       copy:
-        src: /home/appli/MWA_mediawiki/LIVR/Donnees.xml
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
+        src: /home/appli/MWA_mediawiki/LIVR/LoGo/GRA-135.png
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/resources/assets
         remote_src: yes
 
     - name: chmod
