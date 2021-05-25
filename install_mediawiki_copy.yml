@@ -134,13 +134,13 @@
     - name: untar package
       unarchive:
         src: "{{ item }}"
-        dest: //home/appli/MWA_mediawiki/LIVR/01.00.00
+        dest: /home/appli/MWA_mediawiki/LIVR/01.00.00
         remote_src: yes
       loop:
-        - /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops.tar.gz
-        - /home/appli/MWA_mediawiki/LIVR/01.00.00/dump_image.tar.gz
-        - /home/appli/MWA_mediawiki/LIVR/01.00.00/LoGo.tar.gz
-        - /home/appli/MWA_mediawiki/LIVR/01.00.00/Relivraison_24052021.tar.gz        
+        - /home/appli/MWA_mediawiki/LIVR/wikidevops.tar.gz
+        - /home/appli/MWA_mediawiki/LIVR/dump_image.tar.gz
+        - /home/appli/MWA_mediawiki/LIVR/LoGo.tar.gz
+        - /home/appli/MWA_mediawiki/LIVR/Relivraison_24052021.tar.gz        
         #creates: yes
 
 # HANDLERS
