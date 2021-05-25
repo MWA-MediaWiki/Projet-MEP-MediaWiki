@@ -204,8 +204,7 @@
         state: link
       notify: restart apache2
 
-      args:
-        chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
+ 
 
 # HANDLERS
   handlers:
