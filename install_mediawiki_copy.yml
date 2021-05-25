@@ -142,6 +142,7 @@
       copy:
         src: /home/appli/MWA_mediawiki/LIVR/Données.xml
         dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
+        remote_src: yes
 
     - name: chmod
       file: 
