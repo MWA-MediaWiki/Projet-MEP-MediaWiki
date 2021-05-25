@@ -89,7 +89,63 @@
 
 #    - name: create project folder
 
+# deplacement de la base de donnée
+    
+    - name: "stop mysql service"
+      service:
+        name: mysql
+        state: stopped
 
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: /var/lib/mysql
+        dest: /mnt/log
+        owner: mysql
+        group: mysql
+        mode: '0700'
+
+      
+    - name: stat mysql
+      stat: path=/var/lib/mysql/
+      register: mysql_stat
+
+    - name: backup mysql
+      command: mv /var/lib/mysql/ /var/lib/mysql.bak/
+      when: mysql_stat.stat.exists
+
+      
+    - name : create directory FS
+      file:
+        path: /mnt/log
+        state: directory
+
+
+    - name: "edit mysql.conf"
+      lineinfile:
+        dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^# datadir'
+        line: 'datadir     = /mnt/log/mysql'
+
+    - name: "edit apparmor alias"
+      lineinfile:
+        dest: /etc/apparmor.d/tunables/alias
+        regexp: '^alias'
+        line: 'alias /var/lib/mysql/ -> /mnt/log/mysql,'
+    
+    - name: "restart apparmor"
+      service:
+        name: apparmor
+        state: restarted
+
+    - name : create directory structure mysql
+      file:
+        path: /var/lib/mysql/mysql
+        state: directory
+    
+    - name: "restart mysql"
+      service:
+        name: mysql
+        state: restarted
 
 
 # HANDLERS
