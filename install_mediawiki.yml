@@ -101,13 +101,6 @@
 # deplacement de la base de donnée
 
     
-    # tasks to delete later
-    - name : create directory in File System
-      file:
-        path: /mnt/log/
-        state: directory
-
-    
     - name: "stop mysql service"
       service:
         name: mysql
