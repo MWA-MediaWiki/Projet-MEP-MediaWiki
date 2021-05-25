@@ -165,7 +165,7 @@
       lineinfile:
         dest: /etc/mysql/mysql.conf.d/mysqld.cnf
         regexp: '^\$wgLogos'
-        line: '\$wgLogos = [ '1x' => "\$wgResourceBasePath/resources/assets/wiki.png" ];'
+        line: '\$wgLogos = [ "'1x' => "\$wgResourceBasePath/resources/assets/wiki.png"" ];'
 
 #    - name: untar mediawiki
 #      unarchive:
