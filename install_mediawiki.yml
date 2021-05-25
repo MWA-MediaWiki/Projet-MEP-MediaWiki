@@ -135,11 +135,9 @@
       file:
         path: /var/lib/mysql/mysql
         state: directory
-    
-    - name: "restart mysql"
-      service:
-        name: mysql
       notify: restart mysql
+    
+
 
 
 # HANDLERS
