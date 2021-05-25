@@ -178,8 +178,8 @@
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
     - name: sed
-      shell: cd /var/lib/wiki/wikidevops/ | sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php
-      
+      shell: cd /home/appli/MWA_mediawiki/LIVR/wikidevops/ | sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php
+
     - name: create LocalSetting
       template:
         src: templates/mediawiki/LocalSettings.php
