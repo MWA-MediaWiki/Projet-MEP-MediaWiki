@@ -1,4 +1,0 @@
-vmcible ansible_host=192.168.1.26 ansible_user=bulent become=yes
-
-[ubuntu]
-vmcible
