@@ -101,14 +101,9 @@
 
   #  - name: create project folder
 
-    #GIT
-#    - name: Git clone de la branche develop
-#      git:
-#        repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
-#        single_branch: yes
-#        branch: develop
-#        dest: /home
-    
+  
+#Création directory, recup des tar et decompress
+
     - name : directory appli
       file:
         path: "{{ item }}"
@@ -123,7 +118,7 @@
       get_url:
         url: "{{ item }}"
  #       return_content: true
-        dest: /home/appli/MWA_mediawiki/LIVR
+        dest: /tmp
       loop:
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/wikidevops.tar.gz
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/dump_image.tar.gz
@@ -131,22 +126,65 @@
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/Relivraison_24052021.tar.gz
       #register: wp_checksum
 
-#    - name: git repo
-#      ansible.builtin.git:
-#        repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
-#        dest: /home/appli/MWA_mediawiki/LIVR/
-
     - name: untar package
       unarchive:
         src: "{{ item }}"
         dest: /home/appli/MWA_mediawiki/LIVR
         remote_src: yes
       loop:
-        - /home/appli/MWA_mediawiki/LIVR/wikidevops.tar.gz
-        - /home/appli/MWA_mediawiki/LIVR/dump_image.tar.gz
-        - /home/appli/MWA_mediawiki/LIVR/LoGo.tar.gz
-        - /home/appli/MWA_mediawiki/LIVR/Relivraison_24052021.tar.gz        
+        - /tmp/wikidevops.tar.gz
+        - /tmp/dump_image.tar.gz
+        - /tmp/LoGo.tar.gz
+        - /tmp/Relivraison_24052021.tar.gz        
         #creates: yes
+
+    - name: chmod
+      file: 
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
+        owner: root
+        group: apache 
+        mode: 0775 
+        recurse: yes
+
+
+#Création bdd et user
+    - name: Create MySQL DB
+      mysql_db:
+        name: wikiFV
+        stat: present
+
+    - name: Create MySQL user
+      mysql_user:
+        name: userwiki
+        host: localhost
+        password: az
+        priv: wikiFV.*:ALL
+
+ #   - name: Does the database exist?
+   #   command: mysql -u root wikiFV -e "SELECT ID FROM wikiFV.wp_users LIMIT 1;"
+   #   register: db_exist
+    #  ignore_errors: true
+     # changed_when: false
+
+
+    - name: création du lien symbolique
+      file:
+        src: /home/appli/MWA_mediawiki/LIVR/wikidevops
+        dest: /var/www/html/mediawiki
+        state: link
+      notify: restart apache2
+
+
+    - name: install par script
+      command: "{{ item }}"
+      loop:
+        - "php install.php --dbname wikiFV --dbuser userwiki --dbpass az --dbserver localhost --server 'http://192.168.56.102/' --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiFV admin"
+        - "php importDump.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
+        - "php rebuildrecentchanges.php"
+        - "php initSiteStats.php"
+        - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
+      args:
+        chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
 # HANDLERS
   handlers:
