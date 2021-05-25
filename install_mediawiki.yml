@@ -100,8 +100,9 @@
       ansible.builtin.copy:
         src: /var/lib/mysql
         dest: /mnt/log
-        owner: bulent
-        group: bulent
+        remote_src: yes
+        owner: mysql
+        group: mysql
         mode: '0700'
 
       
