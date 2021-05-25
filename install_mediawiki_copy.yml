@@ -9,12 +9,12 @@
 # UPDATE
     - name: update
       apt:
-        name: ""
+        name: "*"
         state: latest
 # UPGRADE
     - name: upgrade
       apt:
-        name: ""
+        name: "*"
         state: latest
 
 # UNZIP
