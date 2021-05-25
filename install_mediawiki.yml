@@ -5,6 +5,18 @@
   hosts: mediawiki
   tasks:
 
+# UPDATE
+    - name: update
+      apt:
+        name: "*"
+        state: latest
+
+# UPGRADE
+    - name: upgrade
+      apt:
+        name: "*"
+        state: latest
+
 # UNZIP
     - name: install unzip package
       package:
@@ -78,10 +90,12 @@
 
 # MEDIAWIKI
     - name: download mediawiki
-      get_url:
-        url: https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz
-        dest: /tmp/mediawiki-1.35.2.tar.gz
-        checksum: ?!?
+
+#    - name: download mediawiki
+#      get_url:
+#        url: https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz
+#        dest: /tmp/mediawiki-1.35.2.tar.gz
+#        checksum: ?!?
 
     - name: untar mediawiki
       unarchive:
