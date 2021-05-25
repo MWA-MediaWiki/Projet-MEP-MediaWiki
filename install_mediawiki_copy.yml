@@ -181,7 +181,7 @@
     - name: create LocalSetting
       template:
         src: templates/mediawiki/LocalSettings.php
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
+        dest: /home/appli/MWA_mediawiki/LIVR/LocalSettings.php
       notify: restart apache2
 
 # HANDLERS
