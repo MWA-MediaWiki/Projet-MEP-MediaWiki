@@ -156,16 +156,14 @@
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
         - "php importImages.php --wiki wikiLin --server 'http://192.168.56.115' --dbuser userLin --dbpass userLin /home/appli/MWA_mediawiki/LIVR/images"
-
-#        - "cd /home/appli/MWA_mediawiki/LIVR/wikidevops/ | sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
-    - name: "edit mysql.conf"
-      lineinfile:
-        dest: /etc/mysql/mysql.conf.d/mysqld.cnf
-        regexp: '^\$wgLogos'
-        line: '\$wgLogos = [ '1x' => "\$wgResourceBasePath/resources/assets/wiki.png" ];'
+    - name: create LocalSetting
+      template:
+        src: templates/mediawiki/LocalSettings.php
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
+      notify: restart apache2
 
 #    - name: untar mediawiki
 #      unarchive:
