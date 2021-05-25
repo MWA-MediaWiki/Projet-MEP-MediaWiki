@@ -91,6 +91,8 @@
 
 # deplacement de la base de donnée
 
+    
+    # tasks to delete later
     - name : create directory in File System
       file:
         path: /mnt/log/
@@ -150,9 +152,20 @@
       file:
         path: /var/lib/mysql.bak
         state: absent
+   
 
-    
+    #Création bdd et user
+    - name: Create MySQL DB
+      mysql_db:
+        name: wikidb
+        state: present
 
+    - name: Create MySQL user
+      mysql_user:
+        name: userwiki
+        host: localhost
+        password: password
+        priv: wikidb.*:ALL
 
 
 # HANDLERS
