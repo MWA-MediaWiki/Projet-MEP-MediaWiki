@@ -120,9 +120,9 @@
         - /home/appli/MWA_mediawiki/LIVR/01.00.00
 
     - name: git repo
-      uri:
+      get_url:
         url: "{{ item }}"
-        return_content: true
+ #       return_content: true
         dest: /home/appli/MWA_mediawiki/LIVR
       loop:
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/wikidevops.tar.gz
