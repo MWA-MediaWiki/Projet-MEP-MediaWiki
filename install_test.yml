@@ -1,0 +1,19 @@
+---
+
+- name : installation de mediawiki
+  become: true
+  hosts: mediawiki
+  tasks:
+
+# UPDATE
+    - name: update
+      apt:
+        name: "*"
+        state: latest
+
+# UPGRADE
+    - name: upgrade
+      apt:
+        name: "*"
+        state: latest
+
