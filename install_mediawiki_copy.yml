@@ -141,7 +141,7 @@
         - /home/appli/MWA_mediawiki/LIVR/01.00.00/dump_image.tar.gz
         - /home/appli/MWA_mediawiki/LIVR/01.00.00/LoGo.tar.gz
         - /home/appli/MWA_mediawiki/LIVR/01.00.00/Relivraison_24052021.tar.gz        
-        creates: ?!?
+        creates: yes
 
 # HANDLERS
   handlers:
