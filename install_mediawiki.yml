@@ -128,7 +128,7 @@
         - /home/appli/MWA_mediawiki
         - /home/appli/MWA_mediawiki/LIVR2
 
-    - name:
+    - name: untar
       unarchive:
         src: /home/appli/MWA_mediawiki/LIVR
         dest: /home/appli/MWA_mediawiki/LIVR2
