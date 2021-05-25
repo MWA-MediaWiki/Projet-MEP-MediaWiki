@@ -124,8 +124,12 @@
       file:
         path: /var/lib/mysql/mysql
         state: directory
-
-      
+    
+    - name: "restart mysql"
+      service:
+        name: mysql
+        state: restarted
+              
 # HANDLERS
   handlers:
     - name: restart apache2
