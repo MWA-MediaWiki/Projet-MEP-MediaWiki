@@ -111,7 +111,7 @@
     
     - name : directory appli
       file:
-        path: "{{ item }}"/home/appli/MWA_mediawiki/LIVR/01.00.00
+        path: "{{ item }}"
         state: directory
       loop:
         - /home/appli
