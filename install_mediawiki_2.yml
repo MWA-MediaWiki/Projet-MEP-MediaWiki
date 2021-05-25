@@ -137,7 +137,6 @@
         mode: 0775
         recurse: yes
 
-
 #Création bdd et user
     - name: Create MySQL DB
       mysql_db:

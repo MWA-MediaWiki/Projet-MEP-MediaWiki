@@ -1,2 +1,14 @@
 ---
 # tasks file for mw.apache2
+# APACHE
+- name: install apache
+  package:
+    name: apache2
+    state: present
+
+- name: création du lien symbolique
+  file:
+    src: /home/appli/MWA_mediawiki/LIVR/wikidevops
+    dest: /var/www/html/wikidevops
+    state: link
+  notify: restart apache2
