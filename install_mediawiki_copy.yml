@@ -173,7 +173,6 @@
         - "php importDump.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
-<<<<<<< Updated upstream
         - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
         - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images/Devops.png"
       args:
@@ -182,19 +181,17 @@
     - name: sed
       shell: sed -i 's/wiki\.png/GRA-135\.png/' /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
 
-<<<<<<< Updated upstream
     - name: create LocalSetting
       template:
         src: templates/mediawiki/LocalSettings.php
         dest: /home/appli/MWA_mediawiki/LIVR/LocalSettings.php
       notify: restart apache2
-=======
- #   - name: create LocalSetting
+
+      #   - name: create LocalSetting
    #   template:
     #    src: templates/mediawiki/LocalSettings.php
     #    dest: /home/appli/MWA_mediawiki/LIVR/LocalSettings.php
    #   notify: restart apache2
->>>>>>> Stashed changes
 
 # HANDLERS
   handlers:
