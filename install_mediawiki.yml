@@ -119,6 +119,13 @@
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/tree/Lyndsey-develop/INPUT/PACKAGE/Donnees.xml
       #register: wp_checksum
 
+    - name:
+      unarchive:
+        src: /home/appli/MWA_mediawiki/LIVR
+        dest: /home/appli/MWA_mediawiki/LIVR2
+        command: "tar xvzf wikidevops.tar.gz"
+        remote_src: yes
+
     - name: untar mediawiki
       unarchive:
         src: /tmp/mediawiki-1.35.2.tar.gz
