@@ -101,7 +101,7 @@
       uri:
         url: "{{ item }}"
         return_content: true
-        dest: /home/lindsey/projet2
+        dest: /home/lindsey/test
       loop:
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/tree/Lyndsey-develop/INPUT/PACKAGE/wikidevops.tar.gz
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/tree/Lyndsey-develop/INPUT/PACKAGE/dump_image.tar.gz
