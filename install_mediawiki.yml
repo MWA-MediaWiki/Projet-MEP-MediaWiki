@@ -90,12 +90,24 @@
 #    - name: create project folder
 
 # MEDIAWIKI
-    - name: git clone du projet mediawiki
-      ansible.builtin.git:
-        repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
-        branch: Lyndsey-develop
-        single_branch: yes
+#    - name: git clone du projet mediawiki
+#      ansible.builtin.git:
+#        repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
+#        branch: Lyndsey-develop
+#        single_branch: yes
+#        dest: /home/lindsey/projet
+
+    - name: git repo
+      uri:
+        url: "{{ item }}"
+        return_content: true
         dest: /home/lindsey/projet
+      loop:
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/tree/Lyndsey-develop/INPUT/PACKAGE/wikidevops.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/tree/Lyndsey-develop/INPUT/PACKAGE/dump_image.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/tree/Lyndsey-develop/INPUT/PACKAGE/LoGo.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/tree/Lyndsey-develop/INPUT/PACKAGE/Donnees.xml
+      #register: wp_checksum
 
     - name: untar mediawiki
       unarchive:
