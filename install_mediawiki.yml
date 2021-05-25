@@ -139,7 +139,7 @@
         name: new_mysql_user
         host: localhost
         password: lindsey
-        priv: new_mysql_user.*:ALL
+        priv: my_wiki.*:ALL
 
     - name: création du lien symbolique
       file:
@@ -158,6 +158,9 @@
         - "php importImages.php --wiki my_wiki --server 'http://192.168.56.115' --dbuser new_mysql_user --dbpass lindsey /home/appli/MWA_mediawiki/LIVR/images"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
+
+    - name: logo
+      shell: sed -i 's/wiki\.png/GRA-135\.png/' /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
 
     - name: create LocalSetting
       template:
