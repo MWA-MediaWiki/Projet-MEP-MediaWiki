@@ -17,3 +17,29 @@
         name: "*"
         state: latest
 
+# PHP et GIT
+    - name: install php et git
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php
+        - php-mysql
+        - php-xml
+        - php-mbstring
+        - git
+
+# APACHE
+    - name: install apache2
+      package:
+        name: apache2
+        state: present
+
+    - name: create apache2 config
+      template:
+        src: templates/apache2/default.j2
+        dest: /etc/apache2/sites-available/default
+      notify: restart apache2
+
+
+...
