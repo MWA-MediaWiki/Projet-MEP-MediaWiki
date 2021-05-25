@@ -41,8 +41,6 @@
         dest: /etc/apache2/sites-available/default
       notify: restart apache2
 
-...
-
 # HANDLERS
   handlers:
     - name: restart apache2
@@ -50,7 +48,5 @@
         name: apache2
         state : restarted
     
-    - name: restart mysql
-      service:
-        name: mysql
-        state: restarted
+...
+
