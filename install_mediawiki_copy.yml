@@ -130,12 +130,12 @@
  #       - https://github.com/Bubu25/Projet-MEP-MediaWiki/blob/Andres-develop/INPUT/PACKAGE/LoGo.tar.gz
  #       - https://github.com/Bubu25/Projet-MEP-MediaWiki/blob/Andres-develop/INPUT/PACKAGE/Relivraison_24052021.tar.gz
       #register: wp_checksum
-      - name: git repo
-        ansible.builtin.git:
-          repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
-          single_branch: yes
-          branch: master
-          dest: /home/lindsey/projet
+    - name: git repo
+      ansible.builtin.git:
+        repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
+        single_branch: yes
+        branch: master
+        dest: /home/lindsey/projet
 
     - name: untar package
       unarchive:
