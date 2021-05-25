@@ -23,7 +23,7 @@
         - php-mbstring
 
 # MySQL
-    - name: Install MySQL
+    - name: Install mysql
       package:
         name: "{{ item }}"
         state: present
