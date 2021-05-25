@@ -95,10 +95,6 @@
         repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
         branch: Lyndsey-develop
         single_branch: yes
-        clone: yes
-        
-    - name: git branch
-      ansible.builtin.git:
         dest: /home/lindsey/projet
 
     - name: untar mediawiki
