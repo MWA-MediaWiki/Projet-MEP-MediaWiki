@@ -108,7 +108,6 @@
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/wikidevops.tar.gz
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/dump_image.tar.gz
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/LoGo.tar.gz
-        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/Relivraison_24052021.tar.gz
       #register: wp_checksum
 
     - name: untar package
@@ -120,7 +119,6 @@
         - /tmp/wikidevops.tar.gz
         - /tmp/dump_image.tar.gz
         - /tmp/LoGo.tar.gz
-        - /tmp/Relivraison_24052021.tar.gz
         #creates: yes
 
     - name: move Données
