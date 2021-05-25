@@ -119,21 +119,22 @@
         - /home/appli/MWA_mediawiki/LIVR
         - /home/appli/MWA_mediawiki/LIVR/01.00.00
 
-    - name: git repo
-      uri:
-        url: "{{ item }}"
-        return_content: true
-        dest: /home/appli/MWA_mediawiki/LIVR
-      loop:
-        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/wikidevops.tar.gz
-        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/dump_image.tar.gz
-        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/LoGo.tar.gz
-        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/Relivraison_24052021.tar.gz
+#    - name: git repo
+#      uri:
+#        url: "{{ item }}"
+#        return_content: true
+#        dest: /home/appli/MWA_mediawiki/LIVR
+#      loop:
+#        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/wikidevops.tar.gz
+#        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/dump_image.tar.gz
+#        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/LoGo.tar.gz
+#        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/Relivraison_24052021.tar.gz
       #register: wp_checksum
- #   - name: git repo
- #     ansible.builtin.git:
- #       repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
- #       dest: /home/lindsey/projet
+
+    - name: git repo
+      ansible.builtin.git:
+        repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
+        dest: /home/appli/MWA_mediawiki/LIVR/01.00.00
 
     - name: untar package
       unarchive:
