@@ -151,7 +151,7 @@
     - name: Create MySQL DB
       mysql_db:
         name: wikiFV
-        stat: present
+        state: present
 
     - name: Create MySQL user
       mysql_user:
