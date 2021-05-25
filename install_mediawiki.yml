@@ -96,12 +96,15 @@
         name: mysql
         state: stopped
 
-    - synchronize:
+    - name: Copy file with owner and permissions
+        ansible.builtin.copy:
         src: /var/lib/mysql
         dest: /mnt/log
-      delegate_to: delegate.mediawiki
+        owner: mysql
+        group: mysql
+        mode: '0700'
 
-
+      
     - name: stat mysql
       stat: path=/var/lib/mysql/
       register: mysql_stat
