@@ -192,11 +192,11 @@
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
- #   - name: edit .png
- #       lineinfile:
- #         dest: /etc/mysql/mysql.conf.d/mysqld.cnf
- #         regexp: 'wiki.png'
- #         line: 'GRA-135.png'
+    - name: edit .png
+        lineinfile:
+          dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+          regexp: '^$wgLogos'
+          line: '$wgLogos = [ '1x' => "$wgResourceBasePath/resources/assets/wiki.png" ];'
 
 # HANDLERS
   handlers:
