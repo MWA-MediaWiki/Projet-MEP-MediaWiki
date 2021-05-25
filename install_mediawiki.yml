@@ -147,7 +147,7 @@
         name: apache2
         state : restarted
     
-    -name: restart mysql
+    - name: restart mysql
      service:
         name: mysql
         state: restarted
