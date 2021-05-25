@@ -107,6 +107,9 @@
         dest: /etc/mysql/mysql.conf.d/mysqld.cnf
         search_string: '^#datadir       = /var/lib/mysql'
         line: 'datadir     = /mnt/log/mysql'
+        owner: root
+        group: root
+        mode: '0644'
 
 
       
