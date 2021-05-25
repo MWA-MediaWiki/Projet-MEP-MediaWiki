@@ -111,9 +111,14 @@
         owner: mysql
         group: mysql
         mode: '0700'
+    
+    - name: stat mysql.bak
+      stat: path=/var/lib/mysql.bak/
+      register: mysql_bak
   
     - name: backup mysql
       command: mv /var/lib/mysql/ /var/lib/mysql.bak/
+      when: not mysql_bak.stat.exists
       
 
     - name: "edit mysql.conf"
