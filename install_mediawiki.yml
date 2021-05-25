@@ -96,6 +96,7 @@
         name: mysql
         state: stopped
 
+
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
         src: /var/lib/mysql
@@ -104,22 +105,13 @@
         owner: mysql
         group: mysql
         mode: '0700'
+  
 
       
-    - name: stat mysql
-      stat: path=/var/lib/mysql/
-      register: mysql_stat
-
-    - name: backup mysql
-      command: mv /var/lib/mysql/ /var/lib/mysql.bak/
-      when: mysql_stat.stat.exists
-
-      
-    - name : create directory FS
+    - name : create directory in File System
       file:
         path: /mnt/log
         state: directory
-
 
     - name: "edit mysql.conf"
       lineinfile:
@@ -138,6 +130,7 @@
         name: apparmor
         state: restarted
 
+    # need to pass the script's environment check
     - name : create directory structure mysql
       file:
         path: /var/lib/mysql/mysql
@@ -146,7 +139,7 @@
     - name: "restart mysql"
       service:
         name: mysql
-        state: restarted
+      notify: restart mysql
 
 
 # HANDLERS
@@ -155,4 +148,9 @@
       service:
         name: apache2
         state : restarted
+    
+    -name: restart mysql
+     service:
+        name: mysql
+        state: restarted
 
