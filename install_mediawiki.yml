@@ -23,8 +23,8 @@
         name: unzip
         state: present
 
-# PHP
-    - name: install php
+# PHP et GIT
+    - name: install php et git
       package:
         name: "{{ item }}"
         state: present
@@ -33,6 +33,7 @@
         - php-mysql
         - php-xml
         - php-mbstring
+        - git
 
 # MySQL
     - name: install mysql
