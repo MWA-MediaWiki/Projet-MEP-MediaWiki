@@ -196,7 +196,7 @@
     - name: install par script
       command: "{{ item }}"
       loop:
-        - "php install.php --dbuser=userwiki --dbpass=password --dbname=wikidb --dbserver=localhost --dbtype=mysql --scriptpath=/wikidevops --confpath=/home/appli/MWA_mediawiki/LIVR/wikidevops  --server='http://192.168.1.26/' --lang=fr --pass=azerty123admin mediawiki admin"
+       - "php install.php --dbname wikidb --dbuser userwiki --dbpass password --dbserver localhost --server 'http://192.168.1.26' --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiFV admin"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
