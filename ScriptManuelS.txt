@@ -1,0 +1,54 @@
+#!/bin/bash
+#Depot des livrables
+sudo apt install -y git
+cd /home
+sudo git clone --branch develop https://github.com/Bubu25/Projet-MEP-MediaWiki.git
+  #attendre 2min
+ 
+#Deversement des livrables
+cd /home
+sudo mkdir -p appli/MWA_mediawiki/LIVR/01.00.00
+cd /home/appli/MWA_mediawiki/LIVR/01.00.00
+sudo tar xvzf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/wikidevops.tar.gz
+  #attendre 1min 
+sudo tar xzvf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/dump_image.tar.gz
+sudo tar xzvf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/LoGo.tar.gz
+sudo mv /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/Donnees.xml /home/appli/MWA_mediawiki/LIVR/01.00.00
+
+#pré-installation
+sudo apt update
+sudo apt upgrade
+  #Entree + attendre 3min
+
+#Install logiciels
+sudo apt install -y apache2 mysql-server php php-xml php-mbstring php-mysql
+  # attendre 2min
+php -version
+mysql --version
+apache2 -version
+
+#BDD
+sudo mysql -u root
+CREATE DATABASE WIKI_DB;
+CREATE USER 'WIKI_DB_USER'@'localhost' IDENTIFIED BY 'WIKI_DB_PASSWD';
+GRANT ALL PRIVILEGES ON WIKI_DB.* TO 'WIKI_DB_USER'@localhost;
+quit;
+
+
+#creation lien symbolique
+sudo ln -s /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops /var/www/html
+sudo systemctl restart apache2
+
+cd /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/maintenance
+sudo php install.php --dbname WIKI_DB --dbuser WIKI_DB_USER --dbpass WIKI_DB_PASSWD --dbserver localhost --server http://192.168.1.23/ --dbtype mysql --wiki WIKI_DB --pass WIKI_DB_PASSWDerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops WIKI_DB admin
+  #1min
+sudo php importDump.php --wiki WIKI_DB --server http://192.168.1.23 --dbuser WIKI_DB_USER --dbpass WIKI_DB_PASSWD /home/appli/MWA_mediawiki/LIVR/01.00.00/Donnees.xml
+sudo php rebuildrecentchanges.php
+sudo php initSiteStats.php
+php importImages.php --wiki WIKI_DB --server http://192.168.1.23/ --dbuser WIKI_DB_USER --dbpass WIKI_DB_PASSWD /home/appli/MWA_mediawiki/LIVR/01.00.00/images
+  #1min
+
+sudo mv /home/appli/MWA_mediawiki/LIVR/01.00.00/LoGo/GRA-135.png /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/resources/assets
+cd /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/ | sudo sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php
+sudo systemctl restart apache2
+exit 0
