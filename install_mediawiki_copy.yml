@@ -140,9 +140,9 @@
 
     - name: chmod
       file: 
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
         owner: root
-        group: root 
+        group: www-data 
         mode: 0775 
         recurse: yes
 
