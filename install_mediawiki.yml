@@ -95,6 +95,11 @@
         name: mysql
         state: stopped
       
+    - name : directory appli
+      file:
+        path: /mnt/log
+        state: directory
+  
 
 # HANDLERS
   handlers:
