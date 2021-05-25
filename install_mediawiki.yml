@@ -148,7 +148,7 @@
         state : restarted
     
     - name: restart mysql
-     service:
+      service:
         name: mysql
         state: restarted
 
