@@ -188,6 +188,14 @@
         - /tmp/Relivraison_24052021.tar.gz        
         #creates: yes
 
+    - name: chmod
+      file: 
+        dest: /home/appli/MWA_mediawiki/LIVR/
+        owner: root
+        group: www-data 
+        mode: 0775 
+        recurse: yes
+
 # HANDLERS
   handlers:
     - name: restart apache2
