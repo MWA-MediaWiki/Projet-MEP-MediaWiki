@@ -20,7 +20,7 @@
 # UNZIP
     - name: install untar package
       package:
-        name: ungz
+        name: tar
         state: present
 
 # PHP
