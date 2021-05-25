@@ -99,7 +99,7 @@
     - synchronize:
         src: /var/lib/mysql
         dest: /mnt/log
-      delegate_to: delegate.host
+      delegate_to: delegate.mediawiki
 
 
     - name: stat mysql
