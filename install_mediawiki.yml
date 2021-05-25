@@ -148,7 +148,7 @@
         state: link
       notify: restart apache2
 
-    - name: installation avec install.php
+    - name: installation via install.php
       command: "{{ item }}"
       loop:
         - "php install.php --dbname wikiLin --dbuser userLin --dbpass userLin --dbserver localhost --server 'http://192.168.56.115' --dbtype mysql --wiki wikiLin --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiLin admin"
@@ -156,7 +156,7 @@
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
         - "php importImages.php --wiki wikiLin --server 'http://192.168.56.115' --dbuser userLin --dbpass userLin /home/appli/MWA_mediawiki/LIVR/images"
-        - "cd /home/appli/MWA_mediawiki/LIVR/wikidevops/ | sed -i 's/wiki.png/GRA-135.png/' LocalSettings.php"
+        - "cd /home/appli/MWA_mediawiki/LIVR/wikidevops/ | sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
