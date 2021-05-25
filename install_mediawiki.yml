@@ -93,7 +93,7 @@
     - name: git clone du projet mediawiki
       ansible.builtin.git:
         repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
-        dest: /home
+        dest: /home/lindsey/projet
 
     - name: untar mediawiki
       unarchive:
