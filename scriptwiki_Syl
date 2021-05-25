@@ -1,0 +1,44 @@
+#!/bin/bash
+sudo apt update
+sudo apt upgrade
+  #Entree + attendre 3min
+sudo apt install -y git apache2 mysql-server php php-xml php-mbstring php-mysql
+  # attendre 2min
+php -version
+mysql --version
+apache2 -version
+cd /home
+sudo git clone --branch develop https://github.com/Bubu25/Projet-MEP-MediaWiki.git
+  #attendre 2min
+cd /home
+sudo mkdir -p appli/MWA_mediawiki/LIVR/01.00.00
+cd /home/appli/MWA_mediawiki/LIVR/01.00.00
+sudo tar xvzf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/wikidevops.tar.gz
+  #attendre 1min (ça defile)
+sudo tar xzvf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/dump_image.tar.gz
+sudo tar xzvf /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/LoGo.tar.gz
+sudo mv /home/Projet-MEP-MediaWiki/INPUT/PACKAGE/Donnees.xml /home/appli/MWA_mediawiki/LIVR/01.00.00
+
+#BDD
+sudo mysql -u root
+CREATE DATABASE wikiFV;
+CREATE USER 'userwiki'@'localhost' IDENTIFIED BY 'az';
+GRANT ALL PRIVILEGES ON wikiFV.* TO 'userwiki'@localhost;
+quit;
+
+sudo ln -s /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops /var/www/html
+sudo systemctl restart apache2
+
+cd /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/maintenance
+sudo php install.php --dbname wikiFV --dbuser userwiki --dbpass az --dbserver localhost --server http://192.168.1.23/ --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops wikiFV admin
+  #1min
+sudo php importDump.php --wiki wikiFV --server http://192.168.1.23 --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/01.00.00/Donnees.xml
+sudo php rebuildrecentchanges.php
+sudo php initSiteStats.php
+php importImages.php --wiki wikiFV --server http://192.168.1.23/ --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/01.00.00/images
+  #1min
+
+sudo mv /home/appli/MWA_mediawiki/LIVR/01.00.00/LoGo/GRA-135.png /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/resources/assets
+cd /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/ | sudo sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php
+sudo systemctl restart apache2
+exit 0
