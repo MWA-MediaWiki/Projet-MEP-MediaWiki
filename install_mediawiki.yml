@@ -97,7 +97,7 @@
 #        single_branch: yes
 #        dest: /home/lindsey/projet
 
-- name : directory appli
+    - name : directory appli
       file:
         path: "{{ item }}"
         state: directory
@@ -108,14 +108,15 @@
         - /home/appli/MWA_mediawiki/LIVR/01.00.00
 
     - name: git repo
-      get_url:
+      uri:
         url: "{{ item }}"
+        return_content: true
         dest: /home/appli/MWA_mediawiki/LIVR
       loop:
-        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/wikidevops.tar.gz
-        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/dump_image.tar.gz
-        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/LoGo.tar.gz
-        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/Relivraison_24052021.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/wikidevops.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/dump_image.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/LoGo.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/Donnees.xml
 
     - name: untar package
       unarchive:
@@ -127,6 +128,14 @@
         - /home/appli/MWA_mediawiki/LIVR/dump_image.tar.gz
         - /home/appli/MWA_mediawiki/LIVR/LoGo.tar.gz
         - /home/appli/MWA_mediawiki/LIVR/Relivraison_24052021.tar.gz
+      #register: wp_checksum
+
+#    - name: untar mediawiki
+#      unarchive:
+#        src: /tmp/mediawiki-1.35.2.tar.gz
+#        dest: /var/lib/mediawiki
+#        remote_src: yes
+#        creates: ?!?
 
 # HANDLERS
   handlers:
