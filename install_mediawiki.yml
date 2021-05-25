@@ -23,7 +23,7 @@
         - php-mbstring
 
 # MySQL
-    - name: Install mysql
+    - name: install mysql
       package:
         name: "{{ item }}"
         state: present
@@ -48,7 +48,6 @@
         name: test
         state: absent
       when: mysql_new_root_pass.changed
-
 
     - name: output new root password
       debug:
