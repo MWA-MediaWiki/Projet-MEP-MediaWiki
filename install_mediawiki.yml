@@ -129,51 +129,60 @@
         - /home/appli/MWA_mediawiki/LIVR/LoGo.tar.gz
       #register: wp_checksum
 
-    - name: création BD mediawiki (mysql)
+#Création bdd et user
+    - name: Create MySQL DB
       mysql_db:
-        name: my_wiki
+        name: wikiFV
         state: present
 
-    - name: création user mediaWiki (mysql)
+    - name: Create MySQL user
       mysql_user:
-        name: new_mysql_user
+        name: userwiki
         host: localhost
-        password: lindsey
-        priv: my_wiki.*:ALL
+        password: az
+        priv: wikiFV.*:ALL
+
+ #   - name: Does the database exist?
+   #   command: mysql -u root wikiFV -e "SELECT ID FROM wikiFV.wp_users LIMIT 1;"
+   #   register: db_exist
+    #  ignore_errors: true
+     # changed_when: false
+
 
     - name: création du lien symbolique
       file:
-        src: /home/appli/MWA_mediawiki/LIVR/wikidevops/
+        src: /home/appli/MWA_mediawiki/LIVR/wikidevops
         dest: /var/www/html/wikidevops
         state: link
       notify: restart apache2
 
-    - name: installation via install.php
+
+    - name: install par script
       command: "{{ item }}"
       loop:
-        - "php install.php --dbname my_wiki --dbuser new_mysql_user --dbpass lindsey --dbserver localhost --server 'http://192.168.56.115' --dbtype mysql --wiki mediawiki -–pass azerty123admin --lang en --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops my_wiki admin"
-        - "php importDump.php --wiki my_wiki --server 'http://192.168.56.115' --dbuser new_mysql_user --dbpass lindsey --debug /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
+        - "php install.php --dbname wikiFV --dbuser userwiki --dbpass az --dbserver localhost --server 'http://192.168.56.102' --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiFV admin"
+        - "php importDump.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
-        - "php importImages.php --wiki my_wiki --server 'http://192.168.56.115' --dbuser new_mysql_user --dbpass lindsey /home/appli/MWA_mediawiki/LIVR/images"
+        - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
+        - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images/Devops.png"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
-    - name: logo
+    - name: sed
       shell: sed -i 's/wiki\.png/GRA-135\.png/' /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
 
     - name: create LocalSetting
       template:
         src: templates/mediawiki/LocalSettings.php
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
+        dest: /home/appli/MWA_mediawiki/LIVR/LocalSettings.php
       notify: restart apache2
 
-#    - name: untar mediawiki
-#      unarchive:
-#        src: /tmp/mediawiki-1.35.2.tar.gz
-#        dest: /var/lib/mediawiki
-#        remote_src: yes
-#        creates: ?!?
+      #   - name: create LocalSetting
+   #   template:
+    #    src: templates/mediawiki/LocalSettings.php
+    #    dest: /home/appli/MWA_mediawiki/LIVR/LocalSettings.php
+   #   notify: restart apache2
 
 # HANDLERS
   handlers:
