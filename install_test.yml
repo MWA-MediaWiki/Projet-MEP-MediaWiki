@@ -176,6 +176,18 @@
         - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/Relivraison_24052021.tar.gz
       #register: wp_checksum
 
+    - name: untar package
+      unarchive:
+        src: "{{ item }}"
+        dest: /home/appli/MWA_mediawiki/LIVR
+        remote_src: yes
+      loop:
+        - /tmp/wikidevops.tar.gz
+        - /tmp/dump_image.tar.gz
+        - /tmp/LoGo.tar.gz
+        - /tmp/Relivraison_24052021.tar.gz        
+        #creates: yes
+
 # HANDLERS
   handlers:
     - name: restart apache2
