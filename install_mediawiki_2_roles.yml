@@ -1,0 +1,10 @@
+---
+
+- hosts: mediawiki
+  become: true
+  roles:
+    - role: mw.prerequis
+    - role: mw.php
+    - role: mw.mysql
+    - role: mw.apache2
+    - role: mw.mediawiki
