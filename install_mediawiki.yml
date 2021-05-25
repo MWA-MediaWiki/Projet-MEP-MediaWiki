@@ -102,8 +102,8 @@
 
 
     - name: stat mysql
-        stat: path=/var/lib/mysql/
-        register: mysql_stat
+      stat: path=/var/lib/mysql/
+      register: mysql_stat
 
     - name: backup mysql
       command: mv /var/lib/mysql/ /var/lib/mysql.bak/
