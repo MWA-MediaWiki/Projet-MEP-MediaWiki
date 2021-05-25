@@ -108,29 +108,19 @@
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
         src: /var/lib/mysql
-        dest: "{{ item }}"
+        dest: /mnt/log
         remote_src: yes
         owner: mysql
         group: mysql
         mode: '0700'
-      with_items:
-        - { dest:'/var/lib/mysql.bak/' }
-        - { dest:'/mnt/log/' }
- 
-    # suppression du directory mysql
-    - name: Remove directory
-      file:
-        path: /var/lib/mysql
-        state: absent
     
-    
-    #- name: stat mysql.bak
-     # stat: path=/var/lib/mysql.bak/
-      #register: mysql_bak
+    - name: stat mysql.bak
+      stat: path=/var/lib/mysql.bak/
+      register: mysql_bak
   
-    #- name: backup mysql
-      #command: mv /var/lib/mysql/ /var/lib/mysql.bak/
-     # when: not mysql_bak.stat.exists
+    - name: backup mysql
+      command: mv /var/lib/mysql/ /var/lib/mysql.bak/
+      when: not mysql_bak.stat.exists
       
 
     - name: "edit mysql.conf"
