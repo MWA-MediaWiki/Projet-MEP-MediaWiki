@@ -101,19 +101,14 @@
         path: /mnt/log
         state: directory
 
-    - name: stat mysql
-      stat: path=/var/lib/mysql
-      register: mysql_stat
-
-    - name: backup mysql
-      command: mv /var/lib/mysql /var/lib/mysql.bak
-      when: mysql_stat.stat.exists
 
     - name: "edit mysql.conf"
       lineinfile:
         dest: /etc/mysql/mysql.conf.d/mysqld.cnf
-        regexp: '^#datadir       = /var/lib/mysql'
+        search_string: '^#datadir       = /var/lib/mysql'
         line: 'datadir     = /mnt/log/mysql'
+
+
       
 # HANDLERS
   handlers:
