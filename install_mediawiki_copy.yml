@@ -142,7 +142,7 @@
       file: 
         dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
         owner: root
-        group: apache 
+        group: root 
         mode: 0775 
         recurse: yes
 
