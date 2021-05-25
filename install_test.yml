@@ -108,7 +108,7 @@
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
         src: /var/lib/mysql
-        dest: {{ item }}
+        dest: "{{ item }}"
         remote_src: yes
         owner: mysql
         group: mysql
