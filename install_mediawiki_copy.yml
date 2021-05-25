@@ -138,6 +138,11 @@
         - /tmp/Relivraison_24052021.tar.gz        
         #creates: yes
 
+    - name: move Données
+      copy:
+        src: /home/appli/MWA_mediawiki/LIVR/Données.xml
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
+
     - name: chmod
       file: 
         dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
@@ -183,8 +188,11 @@
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
         - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
+        - "cd /home/appli/MWA_mediawiki/LIVR/wikidevops/ | sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
+
+
 
 # HANDLERS
   handlers:
