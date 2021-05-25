@@ -134,7 +134,7 @@
     - name: untar package
       unarchive:
         src: "{{ item }}"
-        dest: /home/appli/MWA_mediawiki/LIVR/01.00.00
+        dest: /home/appli/MWA_mediawiki/LIVR
         remote_src: yes
       loop:
         - /home/appli/MWA_mediawiki/LIVR/wikidevops.tar.gz
