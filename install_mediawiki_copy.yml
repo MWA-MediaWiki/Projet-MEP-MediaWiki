@@ -6,11 +6,11 @@
   tasks:
 
 #APT-UPDATE et UPGRADE
-    - name: Update and upgrade apt packages
-      become: true
-      apt:
-        upgrade: yes
-        update_cache: yes
+#    - name: Update and upgrade apt packages
+ #     become: true
+  #    apt:
+   #     upgrade: yes
+    #    update_cache: yes
 
 # UNZIP
     - name: install gtar package
