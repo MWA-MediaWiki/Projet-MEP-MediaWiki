@@ -13,9 +13,9 @@
     #    update_cache: yes
 
 # UNZIP
-    - name: install gtar package
+    - name: install untar package
       package:
-        name: gtar
+        name: untar
         state: present
 
 # PHP
