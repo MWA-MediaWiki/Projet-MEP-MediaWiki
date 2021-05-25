@@ -147,7 +147,7 @@
       mysql_user:
         name: userwikiLN
         host: localhost
-        password: azerty123admin
+        password: az
         priv: wikiLN.*:ALL
 
     - name: création du lien symbolique
