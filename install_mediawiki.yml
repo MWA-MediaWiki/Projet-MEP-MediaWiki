@@ -114,6 +114,11 @@
         dest: /etc/apparmor.d/tunables/alias
         regexp: '^# alias'
         line: 'alias /var/lib/mysql/ -> /mnt/volume-nyc1-01/mysql/,'
+    
+    - name: "restart apparmor"
+      service:
+        name: apparmor
+        state: restarted
 
 
       
