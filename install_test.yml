@@ -113,7 +113,7 @@
         owner: mysql
         group: mysql
         mode: '0700'
-        with_items:
+      with_items:
         - { dest:'/var/lib/mysql.bak/' }
         - { dest:'/mnt/log/' }
  
