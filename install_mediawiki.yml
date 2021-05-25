@@ -131,15 +131,15 @@
 
     - name: Create Mediawiki MySQL database
       mysql_db:
-        name: mediawiki
+        name: wikiLin
         state: present
 
     - name: Create MediaWiki mysql user
       mysql_user:
-        name: MediaWiki
+        name: userLin
         host: localhost
-        password: bananas
-        priv: mediawiki.*:ALL
+        password: userLin
+        priv: userLin.*:ALL
 
 
 #    - name: untar mediawiki
