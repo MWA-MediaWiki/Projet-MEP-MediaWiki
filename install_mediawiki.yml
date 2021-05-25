@@ -156,9 +156,15 @@
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
         - "php importImages.php --wiki wikiLin --server 'http://192.168.56.115' --dbuser userLin --dbpass userLin /home/appli/MWA_mediawiki/LIVR/images"
-        - "cd /home/appli/MWA_mediawiki/LIVR/wikidevops/ | sed -i 's/wiki\.png/GRA-135\.png/' LocalSettings.php"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
+
+    - name: "edit mysql.conf"
+      lineinfile:
+        dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^# datadir'
+        line: 'datadir = /mnt/log/mysql'
+
 
 #    - name: untar mediawiki
 #      unarchive:
