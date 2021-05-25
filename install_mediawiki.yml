@@ -89,7 +89,7 @@
 #    - name: create project folder
 
 # MEDIAWIKI
-    - name: download mediawiki
+#    - name: download mediawiki
 
 #    - name: download mediawiki
 #      get_url:
