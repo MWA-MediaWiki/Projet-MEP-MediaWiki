@@ -75,6 +75,21 @@
         dest: /root/.my.cnf
       when: mysql_new_root_pass.changed
 
+
+    #Création bdd et user
+    - name: Create MySQL DB
+      mysql_db:
+        name: wikidb
+        state: present
+
+    - name: Create MySQL user
+      mysql_user:
+        name: userwiki
+        host: localhost
+        password: password
+        priv: wikidb.*:ALL
+
+
 # APACHE
     - name: install apache2
       package:
@@ -154,18 +169,6 @@
         state: absent
    
 
-    #Création bdd et user
-    - name: Create MySQL DB
-      mysql_db:
-        name: wikidb
-        state: present
-
-    - name: Create MySQL user
-      mysql_user:
-        name: userwiki
-        host: localhost
-        password: password
-        priv: wikidb.*:ALL
 
 
 # HANDLERS
