@@ -8,6 +8,7 @@
     - name: install par script
       command: "{{ item }}"
       loop:
+        - "php install.php --dbname wikiFV --dbuser userwiki --dbpass az --dbserver localhost --server 'http://192.168.1.26' --dbtype mysql  --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops --pass azerty123admin wikiFV admin"
         - "php importDump.php --wiki wikiFV --server 'http://192.168.1.26' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
