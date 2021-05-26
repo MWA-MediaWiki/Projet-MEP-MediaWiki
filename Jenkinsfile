@@ -2,9 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('update upgrade') {
             steps {
-                echo 'Hello World'
+                echo 'mise à jour et mise à niveau'
+                sh 'apt update
+apt upgrade'
             }
         }
     }
