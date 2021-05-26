@@ -29,7 +29,7 @@
   loop:
     - "{{dirtar}}/wikidevops.tar.gz"
     - "{{dirtar}}/dump_image.tar.gz"
-    - "{{dirtar}}"LoGo.tar.gz"
+    - "{{dirtar}}/LoGo.tar.gz"
     - "{{dirtar}}/Relivraison_24052021.tar.gz"
 
 
