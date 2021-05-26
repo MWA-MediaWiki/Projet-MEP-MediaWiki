@@ -4,15 +4,6 @@
   become: true
   hosts: mediawiki
   tasks:
-
-    - name: chmod
-      file: 
-        dest: /home/appli/MWA_mediawiki/LIVR/
-        owner: root
-        group: www-data 
-        mode: 0775 
-        recurse: yes
-
     
     - name: install par script
       command: "{{ item }}"

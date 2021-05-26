@@ -213,7 +213,7 @@
 
     - name: chmod
       file: 
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
+        dest: /home/appli/MWA_mediawiki/LIVR/
         owner: root
         group: www-data 
         mode: 0775 
