@@ -16,15 +16,15 @@
 #    name: www-data
 #    gid: 1100
 
-- name: Copy Apache2 conf
-  template:
-    src: templates/apache2/apache2.conf.j2
-    dest: /etc/apache2/apache2.conf
+#- name: Copy Apache2 conf
+#  template:
+#    src: templates/apache2/apache2.conf.j2
+#    dest: /etc/apache2/apache2.conf
 
-- name: Copy conf site
-  template:
-    src: templates/apache2/mediawiki.conf.j2
-    dest: /etc/apache2/sites-available/mediawiki.conf
-  notify: restart apache2
+#- name: Copy conf site
+#  template:
+#    src: templates/apache2/mediawiki.conf.j2
+#    dest: /etc/apache2/sites-available/mediawiki.conf
+#  notify: restart apache2
 
 

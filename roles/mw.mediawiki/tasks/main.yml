@@ -93,6 +93,13 @@
     mode: 0775
     recurse: yes
 
+ - name: création du lien symbolique
+  file:
+    src: "{{mediawiki}}"
+    dest: /var/www/html/mediawiki
+    state: link
+  notify: restart apache2   
+
 - name: install par script
   command: "{{ item }}"
   loop:
