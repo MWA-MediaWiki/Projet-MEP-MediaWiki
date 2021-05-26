@@ -160,12 +160,12 @@
     - name: install par script
       command: "{{ item }}"
       loop:
-        - "php install.php --dbname wikiLN --dbuser userwikiLN --dbpass az --dbserver localhost --server 'http://192.168.56.115' --dbtype mysql --wiki wikiLN --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiLN admin"
-        - "php importDump.php --wiki wikiLN --server 'http://192.168.56.115' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
+        - "php install.php --dbname wikiLN --dbuser userwikiLN --dbpass az --dbserver localhost --server 'http://192.168.1.86' --dbtype mysql --wiki wikiLN --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiLN admin"
+        - "php importDump.php --wiki wikiLN --server 'http://192.168.1.86' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
-        - "php importImages.php --wiki wikiLN --server 'http://192.168.56.115' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
-        - "php importImages.php --wiki wikiLN --server 'http://192.168.56.115' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/images/Devops.png"
+        - "php importImages.php --wiki wikiLN --server 'http://192.168.1.86' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
+        - "php importImages.php --wiki wikiLN --server 'http://192.168.1.86' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/images/Devops.png"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
