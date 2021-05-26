@@ -75,6 +75,22 @@
         msg: "New root password is {{mysql_new_root_pass.stdout}}"
       when: mysql_new_root_pass.changed
 
+    - name: update root password
+      mysql_user:
+        name: root
+        host: "{{ item }}"
+        password: "{{ my_new_root_pass.stdout }}"
+      loop:
+        - "{{ ansible_host }}"
+        - 127.0.0.1
+        - ::1
+        - localhost
+      when: my_sql_new_root_pass.change
+
+
+
+
+
 #    - name: update root password
 
     - name: create my.cnf
