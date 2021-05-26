@@ -114,6 +114,6 @@
 - name: sed
   shell: sed -i 's/wiki\.png/GRA-135\.png/' "{{mediawiki}}/LocalSettings.php"
 
-- name: Enable site
-  command: "a2ensite mediawiki.conf"
-  notify: restart apache2
+#- name: Enable site
+ # command: "a2ensite mediawiki.conf"
+ #notify: restart apache2
