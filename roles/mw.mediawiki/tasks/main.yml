@@ -102,7 +102,7 @@
     - "php initSiteStats.php"
     - "php importImages.php --wiki {{wiki_nom}} --server 'http://{{ansible_host}}' --dbuser {{mysql_user}} --dbpass {{mysql_pass}} {{mediawiki}}/images"
   args:
-    chdir: "{{apache2_projects}}/maintenance"
+    chdir: "{{mediawiki}}/maintenance"
 
 - name: sed
   shell: sed -i 's/wiki\.png/GRA-135\.png/' "{{apache2_projects}}/LocalSettings.php"
