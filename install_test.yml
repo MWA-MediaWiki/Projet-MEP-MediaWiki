@@ -118,7 +118,7 @@
         name: userwiki
         host: localhost
         password: az
-        priv: wikidb.*:ALL
+        priv: wikiFV.*:ALL
 
 
     # deplace directory mysql
@@ -213,7 +213,7 @@
 
     - name: chmod
       file: 
-        dest: /home/appli/MWA_mediawiki/LIVR/
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
         owner: root
         group: www-data 
         mode: 0775 
