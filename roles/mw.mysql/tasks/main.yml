@@ -62,7 +62,7 @@
     host: localhost
     password: "{{mysql_pass}}"
     priv: "{{mysql_bdd}}.*:ALL"
-    
+
   # deplacement de la base de donnée
 - name: "stop mysql service"
   service:

@@ -82,20 +82,6 @@
     path: "{{dir4}}"
     state: absent
 
-
-#Création bdd et user
-- name: Create MySQL DB
-  mysql_db:
-    name: "{{mysql_bdd}}"
-    state: present
-
-- name: Create MySQL user
-  mysql_user:
-    name: "{{mysql_user}}"
-    host: localhost
-    password: "{{mysql_pass}}"
-    priv: "{{mysql_bdd}}.*:ALL"
-
 - name: création du lien symbolique
   file:
     src: "{{dir_wm}}"
