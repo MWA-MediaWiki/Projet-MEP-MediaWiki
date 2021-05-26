@@ -40,7 +40,7 @@ sudo ln -s /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops /var/www/html
 sudo systemctl restart apache2
 
 cd /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops/maintenance
-sudo php install.php --dbname WIKI_DB --dbuser WIKI_DB_USER --dbpass WIKI_DB_PASSWD --dbserver localhost --server http://192.168.1.23/ --dbtype mysql --wiki WIKI_DB --pass WIKI_PASS_ADMIN --lang fr --scriptpath wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops WIKI_DB admin
+sudo php install.php --dbname WIKI_DB --dbuser WIKI_DB_USER --dbpass WIKI_DB_PASSWD --dbserver localhost --server http://192.168.1.23/ --dbtype mysql --wiki WIKI_DB --pass WIKI_PASS_ADMIN --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/01.00.00/wikidevops WIKI_DB admin
   #1min
 sudo php importDump.php --wiki WIKI_DB --server http://192.168.1.23 --dbuser WIKI_DB_USER --dbpass WIKI_DB_PASSWD /home/appli/MWA_mediawiki/LIVR/01.00.00/Donnees.xml
 sudo php rebuildrecentchanges.php
