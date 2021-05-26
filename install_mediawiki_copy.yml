@@ -39,7 +39,7 @@
         - python3-mysqldb
 
     - name: generate new root password
-      command: openssl rand -hex 10
+      command: openssl rand -hex 7
       args:
         creates: /root/.my.cnf
       register: mysql_new_root_pass
