@@ -16,10 +16,10 @@
     url: "{{ item }}"
     dest: "{{dirtar}}"
   loop:
-    - "{{repo_file}}"/wikidevops.tar.gz
-    - "{{repo_file}}"/dump_image.tar.gz
-    - "{{repo_file}}"/LoGo.tar.gz
-    - "{{repo_file}}"/Relivraison_24052021.tar.gz
+    - "{{repo_file}}/wikidevops.tar.gz"
+    - "{{repo_file}}/dump_image.tar.gz"
+    - "{{repo_file}}/LoGo.tar.gz"
+    - "{{repo_file}}/Relivraison_24052021.tar.gz"
 
 - name: untar package
   unarchive:
@@ -27,17 +27,17 @@
     dest: "{{dir4}}"
     remote_src: yes
   loop:
-    - "{{dirtar}}"/wikidevops.tar.gz
-    - "{{dirtar}}"/dump_image.tar.gz
-    - "{{dirtar}}"/LoGo.tar.gz
-    - "{{dirtar}}"/Relivraison_24052021.tar.gz
+    - "{{dirtar}}/wikidevops.tar.gz"
+    - "{{dirtar}}/dump_image.tar.gz"
+    - "{{dirtar}}"LoGo.tar.gz"
+    - "{{dirtar}}/Relivraison_24052021.tar.gz"
 
 
 - name: Copy files from foo to bar
   command: "mv {{dir4}}/wikidevops/ {{dir4}}/01.00.00" 
   args:
-    creates: "{{dir4}}"/01.00.00 
-    removes: "{{dir4}}"/wikidevops/
+    creates: "{{dir4}}/01.00.00"
+    removes: "{{dir4}}/wikidevops/"
 
 - name: Copy files from foo to bar
   command: "mv {{dir4}}/01.00.00/ {{dir3}}/01.00.00"
@@ -47,25 +47,25 @@
     path: "{{ item }}"
     state: directory
   loop:
-    - "{{dir_wm}}"/images/2
-    - "{{dir_wm}}"/images/2/21
+    - "{{dir_wm}}/images/2"
+    - "{{dir_wm}}/images/2/21"
 
 - name: move Données
   copy:
-    src: "{{dir4}}"/LoGo/GRA-135.png
-    dest: "{{dir_wm}}"/resources/assets
+    src: "{{dir4}}/LoGo/GRA-135.png"
+    dest: "{{dir_wm}}/resources/assets"
     remote_src: yes
 
 - name: move image
   copy:
-    src: "{{dir4}}"/images/DevOps.png
-    dest: "{{dir_wm}}"/images/2/21
+    src: "{{dir4}}/images/DevOps.png"
+    dest: "{{dir_wm}}/images/2/21"
     remote_src: yes       
 
         
 - name: move Doonees
   copy:
-    src: "{{dir4}}"/Donnees.xml
+    src: "{{dir4}}/Donnees.xml"
     dest: "{{dir_wm}}"
     remote_src: yes  
 
@@ -86,7 +86,7 @@
 #Création bdd et user
 - name: Create MySQL DB
   mysql_db:
-    name: {{mysql_bdd}}
+    name: "{{mysql_bdd}}"
     state: present
 
 - name: Create MySQL user
@@ -94,11 +94,11 @@
     name: "{{mysql_user}}"
     host: localhost
     password: "{{mysql_pass}}"
-    priv: {{mysql_user}}.*:ALL
+    priv: "{{mysql_user}}.*:ALL"
 
 - name: création du lien symbolique
   file:
-    src: {{dir_wm}}
+    src: "{{dir_wm}}"
     dest: /var/www/html/01.00.00
     state: link
   notify: restart apache2
@@ -112,7 +112,7 @@
     - "php initSiteStats.php"
     - "php importImages.php --wiki '{{wiki_nom}}' --server '{{ansible_host}}' --dbuser '{{mysql_user}}' --dbpass '{{mysql_pass}}' '{{dir_wm}}'/images"
   args:
-    chdir: "{{dir_wm}}"/maintenance
+    chdir: "{{dir_wm}}/maintenance"
 
 - name: sed
-  shell: sed -i 's/wiki\.png/GRA-135\.png/' "{{dir_wm}}"/LocalSettings.php
+  shell: sed -i 's/wiki\.png/GRA-135\.png/' "{{dir_wm}}/LocalSettings.php"
