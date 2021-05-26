@@ -124,11 +124,12 @@
         #creates: yes
 
     - name: Copy files from foo to bar
-      copy: 
-        remote_src: true
-        src: /home/appli/MWA_mediawiki/LIVR/Downloads/wikidevops/* 
-        dest: /home/appli/MWA_mediawiki/LIVR/01.00.00 
+      command: mv /home/appli/MWA_mediawiki/LIVR/Downloads/wikidevops/ /home/appli/MWA_mediawiki/LIVR/Downloads/01.00.00 
+      creates: /home/appli/MWA_mediawiki/LIVR/Downloads/01.00.00 
+      removes: /home/appli/MWA_mediawiki/LIVR/Downloads/wikidevops/
 
+    - name: Copy files from foo to bar
+      command: mv /home/appli/MWA_mediawiki/LIVR/Downloads/01.00.00/ /home/appli/MWA_mediawiki/LIVR/01.00.00 
 
     - name : directory image
       file:
