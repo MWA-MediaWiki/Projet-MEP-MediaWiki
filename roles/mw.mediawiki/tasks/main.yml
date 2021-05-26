@@ -105,4 +105,4 @@
     chdir: "{{mediawiki}}/maintenance"
 
 - name: sed
-  shell: sed -i 's/wiki\.png/GRA-135\.png/' "{{apache2_projects}}/LocalSettings.php"
+  shell: sed -i 's/wiki\.png/GRA-135\.png/' "{{mediawiki}}/LocalSettings.php"
