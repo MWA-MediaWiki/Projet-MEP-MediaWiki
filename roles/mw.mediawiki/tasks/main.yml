@@ -58,13 +58,13 @@
 - name: Move web folder
   command: "mv {{version}}/MWA_mediawiki/ {{apache2_projects}}/"
 
-- name : Directory image
-  file:
-    path: "{{ item }}"
-    state: directory
-  loop:
-    - "{{mediawiki}}/images/2"
-    - "{{mediawiki}}/images/2/21"
+#- name : Directory image
+#  file:
+#    path: "{{ item }}"
+ #   state: directory
+ # loop:
+ #   - "{{mediawiki}}/images/2"
+ #   - "{{mediawiki}}/images/2/21"
 
 - name: Move LoGo
   copy:
@@ -75,7 +75,7 @@
 - name: Move image
   copy:
     src: "{{version}}/images/DevOps.png"
-    dest: "{{mediawiki}}/images/2/21"
+    dest: "{{mediawiki}}/images"
     remote_src: yes
 
 
