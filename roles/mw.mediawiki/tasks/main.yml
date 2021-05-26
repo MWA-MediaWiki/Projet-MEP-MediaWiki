@@ -87,7 +87,7 @@
 
 - name: chmod
   file:
-    dest: "{{mediawiki}}"
+    dest: "{{apache2}}"
     owner: root
     group: www-data
     mode: 0775
