@@ -23,7 +23,5 @@
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
         
-  args:
-    chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
 ...
