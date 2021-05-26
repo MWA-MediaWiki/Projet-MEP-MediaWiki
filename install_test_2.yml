@@ -8,7 +8,7 @@
     - name: install par script
       command: "{{ item }}"
       loop:
-        - "php install.php --dbname wikiLN --dbuser userwikiLN --dbpass az --dbserver localhost --server 'http://192.168.56.115' --dbtype mysql --wiki wikiLN --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiLN admin"
+        - "php install.php --dbname wikiLN --dbuser userwikiLN --dbpass az --dbserver localhost --server 'http://192.168.56.26' --dbtype mysql --wiki wikiLN --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiLN admin"
         - "php importDump.php --wiki wikiLN --server 'http://192.168.1.26' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
