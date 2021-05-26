@@ -51,9 +51,22 @@
   when: mysql_new_root_pass.changed
 
 
-  # deplacement de la base de donnée
 
-    
+  #Création bdd et user
+- name: Create MySQL DB
+  mysql_db:
+    name: wikiLN
+    state: present
+
+- name: Create MySQL user
+  mysql_user:
+    name: userwikiLN
+    host: localhost
+    password: az
+    priv: wikiLN.*:ALL
+
+
+  # deplacement de la base de donnée    
 - name: "stop mysql service"
   service:
     name: mysql

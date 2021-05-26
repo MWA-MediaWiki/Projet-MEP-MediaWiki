@@ -46,18 +46,6 @@
     mode: 0775
     recurse: yes
 
-#Création bdd et user
-- name: Create MySQL DB
-  mysql_db:
-    name: wikiLN
-    state: present
-
-- name: Create MySQL user
-  mysql_user:
-    name: userwikiLN
-    host: localhost
-    password: az
-    priv: wikiLN.*:ALL
 
 - name: création du lien symbolique
   file:
