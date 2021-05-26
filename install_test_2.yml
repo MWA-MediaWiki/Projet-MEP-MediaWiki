@@ -21,6 +21,8 @@
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
         - "php importImages.php --wiki wikiFV --server 'http://192.168.56.102' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/wikidevops/images"
+        - "php rebuildrecentchanges.php"
+        - "php initSiteStats.php"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
         
