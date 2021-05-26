@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+        DocumentRoot /home/appli/projects/MWA/apache2/MWA_mediawiki
+        <Directory /home/appli/projects/MWA/apache2/MWA_mediawiki>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Require all granted
+        </Directory>
+
+        ErrorLog /home/www/apache_log/error_site-1.log
+        LogLevel warn
+        CustomLog /home/www/apache_log/access_site-1.log combined
+
+</VirtualHost>
