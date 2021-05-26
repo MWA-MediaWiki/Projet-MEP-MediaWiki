@@ -6,31 +6,34 @@
     path: "{{ item }}"
     state: directory
   loop:
-    - "{{dir1}}"
-    - "{{dir2}}"
-    - "{{dir3}}"
-    - "{{dir4}}"
+    - "{{main}}"
+    - "{{projects}}"
+    - "{{MWA_projects}}"
+    - "{{apache2_projects}}"
+    - "{{MWA_livr}}"
+    - "{{livr}}"
+    - "{{version}}"
 
 - name: git repo
   get_url:
     url: "{{ item }}"
-    dest: "{{dirtar}}"
+    dest: "{{version}}"
   loop:
-    - "{{repo_file}}/wikidevops.tar.gz"
-    - "{{repo_file}}/dump_image.tar.gz"
-    - "{{repo_file}}/LoGo.tar.gz"
-    - "{{repo_file}}/Relivraison_24052021.tar.gz"
+    - "{{repository}}/MWA_01.00.00_MEDIAWIKI.tar.gz"
+    - "{{repository}}/MWA_01.00.00_IMAGES.tar.gz"
+    - "{{repository}}/MWA_01.00.00_LOGO.tar.gz"
+    - "{{repository}}/MWA_01.00.00_DONNEES.tar.gz"
 
 - name: untar package
   unarchive:
     src: "{{ item }}"
-    dest: "{{dir4}}"
+    dest: "{{version}}"
     remote_src: yes
   loop:
-    - "{{dirtar}}/wikidevops.tar.gz"
-    - "{{dirtar}}/dump_image.tar.gz"
-    - "{{dirtar}}/LoGo.tar.gz"
-    - "{{dirtar}}/Relivraison_24052021.tar.gz"
+    - "{{version}}/MWA_01.00.00_MEDIAWIKI.tar.gz"
+    - "{{version}}/MWA_01.00.00_IMAGES.tar.gz"
+    - "{{version}}/MWA_01.00.00_LOGO.tar.gz"
+    - "{{version}}/MWA_01.00.00_DONNEES.tar.gz"
 
 #Création bdd et user
 - name: Create MySQL DB
@@ -46,72 +49,60 @@
     priv: "{{mysql_bdd}}.*:ALL"
 
 
-- name: Copy files from foo to bar
-  command: "mv {{dir4}}/wikidevops/ {{dir4}}/01.00.00"
+- name: Renommage wikidevops
+  command: "mv {{version}}/wikidevops/ {{version}}/MWA_mediawiki"
   args:
-    creates: "{{dir4}}/01.00.00"
-    removes: "{{dir4}}/wikidevops/"
+    creates: "{{version}}/MWA_mediawiki"
+    removes: "{{version}}/wikidevops"
 
-- name: Copy files from foo to bar
-  command: "mv {{dir4}}/01.00.00/ {{dir3}}/"
+- name: Move web folder
+  command: "mv {{version}}/MWA_mediawiki/ {{apache2_projects}}/"
 
-- name : directory image
+- name : Directory image
   file:
     path: "{{ item }}"
     state: directory
   loop:
-    - "{{dir_wm}}/images/2"
-    - "{{dir_wm}}/images/2/21"
+    - "{{mediawiki}}/images/2"
+    - "{{mediawiki}}/images/2/21"
 
-- name: move LoGo
+- name: Move LoGo
   copy:
-    src: "{{dir4}}/LoGo/GRA-135.png"
-    dest: "{{dir_wm}}/resources/assets"
+    src: "{{version}}/LoGo/GRA-135.png"
+    dest: "{{mediawiki}}/resources/assets"
     remote_src: yes
 
-- name: move image
+- name: Move image
   copy:
-    src: "{{dir4}}/images/DevOps.png"
-    dest: "{{dir_wm}}/images/2/21"
+    src: "{{version}}/images/DevOps.png"
+    dest: "{{mediawiki}}/images/2/21"
     remote_src: yes
 
 
-- name: move Donnees.xml
+- name: Move Donnees.xml
   copy:
-    src: "{{dir4}}/Donnees.xml"
-    dest: "{{dir_wm}}"
+    src: "{{version}}/Donnees.xml"
+    dest: "{{mediawiki}}"
     remote_src: yes
 
 - name: chmod
   file:
-    dest: "{{dir3}}"
+    dest: "{{apache2_projects}}"
     owner: root
     group: www-data
     mode: 0775
     recurse: yes
 
-- name: Remove old files foo
-  file:
-    path: "{{dir4}}"
-    state: absent
-
-- name: création du lien symbolique
-  file:
-    src: "{{dir_wm}}"
-    dest: /var/www/html/wikidevops
-    state: link
-  notify: restart apache2
-
 - name: install par script
   command: "{{ item }}"
   loop:
-    - "php install.php --dbname {{mysql_bdd}} --dbuser {{mysql_user}} --dbpass {{mysql_pass}} --dbserver localhost --server='http://{{ansible_host}}' --dbtype mysql --wiki {{wiki_nom}} --pass {{wiki_pass}} --lang fr --scriptpath /wikidevops --confpath {{dir_wm}} {{wiki_nom}} admin"
-    - "php importDump.php --wiki {{wiki_nom}} --server 'http://{{ansible_host}}' --dbuser {{mysql_user}} --dbpass {{mysql_pass}} {{dir_wm}}/Donnees.xml"
+    - "php install.php --dbname {{mysql_bdd}} --dbuser {{mysql_user}} --dbpass {{mysql_pass}} --dbserver localhost --server='http://{{ansible_host}}' --dbtype mysql --wiki {{wiki_nom}} --pass {{wiki_pass}} --lang fr --scriptpath /mediawiki --confpath {{mediawiki}} {{wiki_nom}} admin"
+    - "php importDump.php --wiki {{wiki_nom}} --server 'http://{{ansible_host}}' --dbuser {{mysql_user}} --dbpass {{mysql_pass}} {{mediawiki}}/Donnees.xml"
     - "php rebuildrecentchanges.php"
     - "php initSiteStats.php"
-    - "php importImages.php --wiki {{wiki_nom}} --server 'http://{{ansible_host}}' --dbuser {{mysql_user}} --dbpass {{mysql_pass}} {{dir_wm}}/images"
+    - "php importImages.php --wiki {{wiki_nom}} --server 'http://{{ansible_host}}' --dbuser {{mysql_user}} --dbpass {{mysql_pass}} {{mediawiki}}/images"
   args:
-    chdir: "{{dir_wm}}/maintenance"
+    chdir: "{{apache2_projects}}/maintenance"
 
 - name: sed
-  shell: sed -i 's/wiki\.png/GRA-135\.png/' "{{dir_wm}}/LocalSettings.php"
+  shell: sed -i 's/wiki\.png/GRA-135\.png/' "{{apache2_projects}}/LocalSettings.php"

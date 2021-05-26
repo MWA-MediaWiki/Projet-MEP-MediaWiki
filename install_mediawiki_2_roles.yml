@@ -5,21 +5,20 @@
   roles:
     - role: mw.prerequis
     - role: mw.php
-    - role: mw.mysql
-      mysql_bdd: wikiLN
-      mysql_user: userwikiLN
-      mysql_pass: az    
+    - role: mw.mysql   
     - role: mw.apache2
     - role: mw.mediawiki
-      dir1: /home/appli
-      dir2: "{{dir1}}/MWA_mediawiki"
-      dir3: "{{dir2}}/LIVR"
-      dir4: "{{dir3}}/Downloads"
-      dir_wm: "{{dir3}}/01.00.00"
-      mysql_bdd: wikiLN
-      mysql_user: userwikiLN
-      mysql_pass: az
-      dirtar: /tmp
-      repo_file: https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE
-      wiki_nom: wikiLN
-      wiki_pass: azerty123admin
+      main: /home/appli
+      projects: "{{main}}/projects"
+      MWA_projects: "{{projects}}/MWA"
+      apache2_projects: "{{MWA_projects}}/apache2"
+      mediawiki: "{{apache2_projects}}/MWA_mediawiki"
+      MWA_livr: "{{main}}/MWA_mediawiki"
+      livr: "{{MWA_livr}}/LIVR"
+      version: "{{livr}}/Downloads"
+      mysql_bdd: WIKI_DB
+      mysql_user: WIKI_DB_USER
+      mysql_pass: WIKI_DB_PASSWD
+      repository: https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE
+      wiki_nom: MWA
+      wiki_pass: motdepassewiki
