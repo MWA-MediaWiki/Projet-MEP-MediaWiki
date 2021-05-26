@@ -12,10 +12,10 @@
     #     name: "*"
     #     state: latest
 # UPGRADE
-    - name: upgrade
-      apt:
-        name: "*"
-        state: latest
+    # - name: upgrade
+    #   apt:
+    #     name: "*"
+    #     state: latest
 
 # PHP
     - name: install php
