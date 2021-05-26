@@ -1,4 +1,4 @@
-server ansible_host=192.168.1.86 ansible_user=syl become=yes
+server ansible_host=192.168.56.106 ansible_user=webadmin become=yes
 
 [mediawiki]
 server
