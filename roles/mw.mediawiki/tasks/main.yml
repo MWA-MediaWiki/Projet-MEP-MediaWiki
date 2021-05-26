@@ -34,13 +34,13 @@
 
 
 - name: Copy files from foo to bar
-  command: "mv {{dir4}}/wikidevops/ {{dir4}}/01.00.00" 
+  command: "mv {{dir4}}/wikidevops/ {{dir4}}/01.00.00"
   args:
     creates: "{{dir4}}/01.00.00"
     removes: "{{dir4}}/wikidevops/"
 
 - name: Copy files from foo to bar
-  command: "mv {{dir4}}/01.00.00/ {{dir3}}/01.00.00"
+  command: "mv {{dir4}}/01.00.00/ {{dir3}}/"
 
 - name : directory image
   file:
@@ -50,7 +50,7 @@
     - "{{dir_wm}}/images/2"
     - "{{dir_wm}}/images/2/21"
 
-- name: move Données
+- name: move LoGo
   copy:
     src: "{{dir4}}/LoGo/GRA-135.png"
     dest: "{{dir_wm}}/resources/assets"
@@ -60,25 +60,25 @@
   copy:
     src: "{{dir4}}/images/DevOps.png"
     dest: "{{dir_wm}}/images/2/21"
-    remote_src: yes       
+    remote_src: yes
 
-        
-- name: move Doonees
+
+- name: move Donnees.xml
   copy:
     src: "{{dir4}}/Donnees.xml"
     dest: "{{dir_wm}}"
-    remote_src: yes  
+    remote_src: yes
 
 - name: chmod
-  file: 
+  file:
     dest: "{{dir3}}"
     owner: root
-    group: www-data 
-    mode: 0775 
+    group: www-data
+    mode: 0775
     recurse: yes
-      
+
 - name: Remove old files foo
-  file: 
+  file:
     path: "{{dir4}}"
     state: absent
 
@@ -94,7 +94,7 @@
     name: "{{mysql_user}}"
     host: localhost
     password: "{{mysql_pass}}"
-    priv: "{{mysql_user}}.*:ALL"
+    priv: "{{mysql_bdd}}.*:ALL"
 
 - name: création du lien symbolique
   file:
