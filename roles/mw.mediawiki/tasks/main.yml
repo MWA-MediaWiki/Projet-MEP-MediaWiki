@@ -93,7 +93,7 @@
     mode: 0775
     recurse: yes
 
- - name: création du lien symbolique
+- name: création du lien symbolique
   file:
     src: "{{mediawiki}}"
     dest: /var/www/html/mediawiki
