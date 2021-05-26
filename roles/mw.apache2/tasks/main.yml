@@ -5,3 +5,8 @@
   package:
     name: apache2
     state: present
+
+- name: Copy Apache2 conf
+  template:
+    src: templates/apache2.conf
+    dest: /etc/apache2/apache2.conf
