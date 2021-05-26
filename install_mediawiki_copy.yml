@@ -127,7 +127,7 @@
       copy: 
         remote_src: true
         src: /home/appli/MWA_mediawiki/LIVR/Downloads/wikidevops 
-        dest: home/appli/MWA_mediawiki/LIVR/01.00.00 
+        dest: /home/appli/MWA_mediawiki/LIVR/01.00.00 
 
 
     - name : directory image
@@ -135,26 +135,26 @@
         path: "{{ item }}"
         state: directory
       loop:
-        - /home/appli/MWA_mediawiki/LIVR/wikidevops/images/2
-        - /home/appli/MWA_mediawiki/LIVR/wikidevops/images/2/21
+        - /home/appli/MWA_mediawiki/LIVR/01.00.00/images/2
+        - /home/appli/MWA_mediawiki/LIVR/01.00.00/images/2/21
 
     - name: move Données
       copy:
         src: /home/appli/MWA_mediawiki/LIVR/Downloads/LoGo/GRA-135.png
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/resources/assets
+        dest: /home/appli/MWA_mediawiki/LIVR/01.00.00/resources/assets
         remote_src: yes
 
     - name: move image
       copy:
         src: /home/appli/MWA_mediawiki/LIVR/Downloads/images/DevOps.png
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/images/2/21
+        dest: /home/appli/MWA_mediawiki/LIVR/01.00.00/images/2/21
         remote_src: yes       
 
         
     - name: move Doonees
       copy:
         src: /home/appli/MWA_mediawiki/LIVR/Downloads/Donnees.xml
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
+        dest: /home/appli/MWA_mediawiki/LIVR/01.00.00
         remote_src: yes  
 
     - name: chmod
