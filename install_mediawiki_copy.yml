@@ -125,6 +125,7 @@
 
     - name: Copy files from foo to bar
       command: "mv /home/appli/MWA_mediawiki/LIVR/Downloads/wikidevops/ /home/appli/MWA_mediawiki/LIVR/Downloads/01.00.00" 
+      args:
         creates: /home/appli/MWA_mediawiki/LIVR/Downloads/01.00.00 
         removes: /home/appli/MWA_mediawiki/LIVR/Downloads/wikidevops/
 
