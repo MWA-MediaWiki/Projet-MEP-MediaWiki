@@ -99,14 +99,14 @@
 - name: création du lien symbolique
   file:
     src: "{{dir_wm}}"
-    dest: /var/www/html/01.00.00
+    dest: /var/www/html/wikidevops
     state: link
   notify: restart apache2
 
 - name: install par script
   command: "{{ item }}"
   loop:
-    - "php install.php --dbname {{mysql_bdd}} --dbuser {{mysql_user}} --dbpass {{mysql_pass}} --dbserver localhost --server {{ansible_host}} --dbtype mysql --wiki {{wiki_nom}} --pass {{wiki_pass}} --lang fr --confpath {{dir_wm}} {{wiki_nom}} admin"
+    - "php install.php --dbname {{mysql_bdd}} --dbuser {{mysql_user}} --dbpass {{mysql_pass}} --dbserver localhost --server {{ansible_host}} --dbtype mysql --wiki {{wiki_nom}} --pass {{wiki_pass}} --lang fr --scriptpath /wikidevops --confpath {{dir_wm}} {{wiki_nom}} admin"
     - "php importDump.php --wiki {{wiki_nom}} --server '{{ansible_host}}' --dbuser {{mysql_user}} --dbpass {{mysql_pass}} {{dir_wm}}/Donnees.xml"
     - "php rebuildrecentchanges.php"
     - "php initSiteStats.php"

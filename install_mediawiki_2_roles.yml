@@ -15,7 +15,7 @@
       dir_wm: "{{dir3}}/01.00.00"
       mysql_bdd: wikiLN
       mysql_user: userwikiLN
-      mysql_pass: =az
+      mysql_pass: az
       dirtar: /tmp
       repo_file: https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE
       wiki_nom: wikiLN
