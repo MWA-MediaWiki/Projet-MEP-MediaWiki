@@ -2,7 +2,7 @@
 
 - hosts: mediawiki
   become: true
-  vars_files: group_vars/vars
+  vars_files: group_vars/vars.yml
   roles:
     - role: mw.prerequis
     - role: mw.php
