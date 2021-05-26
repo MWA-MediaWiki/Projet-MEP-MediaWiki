@@ -17,7 +17,7 @@
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
-      - name: sed
-        shell: sed -i 's/wiki\.png/GRA-135\.png/' /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
+    - name: sed
+      shell: sed -i 's/wiki\.png/GRA-135\.png/' /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
 
 ...
