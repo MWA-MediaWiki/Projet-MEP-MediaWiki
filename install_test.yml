@@ -44,7 +44,8 @@
 
 
 # MySQL
-    - name: install mysql
+#MySQL
+    - name: Install MySQL
       package:
         name: "{{ item }}"
         state: present
@@ -52,40 +53,46 @@
         - mysql-server
         - python3-mysqldb
 
-    - name: generate new root password
-      command: openssl rand -hex 10
+    - name: Generate new root password
+      command: openssl rand -hex 7
       args:
         creates: /root/.my.cnf
       register: mysql_new_root_pass
 
-    - name: remove anonymous users
+    - name: Remove anonymous users
       mysql_user:
         name: ""
         state: absent
       when: mysql_new_root_pass.changed
 
-    - name: remove test database
+    - name: Remove test database
       mysql_db:
         name: test
         state: absent
       when: mysql_new_root_pass.changed
 
-    - name: output new root password
+    - name: Output new root password
       debug:
         msg: "New root password is {{mysql_new_root_pass.stdout}}"
       when: mysql_new_root_pass.changed
 
-    - name: update root password
+    - name: Update root password
       mysql_user:
         name: root
         host: "{{ item }}"
         password: "{{ mysql_new_root_pass.stdout }}"
       loop:
-        - "{{ ansible_host }}"
+        - "{{ ansible_hostname }}"
         - 127.0.0.1
         - ::1
         - localhost
-      when: my_sql_new_root_pass.change
+      when: mysql_new_root_pass.changed
+
+    - name: Create my.cnf
+      template:
+        src: templates/mysql/my.cnf.j2
+        dest: /root/.my.cnf
+      when: mysql_new_root_pass.changed
 
 
 
