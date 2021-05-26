@@ -9,10 +9,10 @@
     - role: mw.apache2
     - role: mw.mediawiki
       dir1: /home/appli
-      dir2: {{dir1}}/MWA_mediawiki
-      dir3: {{dir2}}/LIVR
-      dir4: {{dir3}}/Downloads
-      dir_wm: {{dir3}}/01.00.00
+      dir2: "{{dir1}}/MWA_mediawiki"
+      dir3: "{{dir2}}/LIVR"
+      dir4: "{{dir3}}/Downloads"
+      dir_wm: "{{dir3}}/01.00.00"
       mysql_bdd: wikiLN
       mysql_user: userwikiLN
       mysql_pass: =az
