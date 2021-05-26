@@ -94,7 +94,7 @@
     name: "{{mysql_user}}"
     host: localhost
     password: "{{mysql_pass}}"
-    priv: "{{mysql_user}}.*:ALL"
+    priv: "{{mysql_bdd}}.*:ALL"
 
 - name: création du lien symbolique
   file:
