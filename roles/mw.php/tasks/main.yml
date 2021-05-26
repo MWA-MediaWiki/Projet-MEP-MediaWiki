@@ -1,0 +1,13 @@
+---
+# tasks file for mw.php
+# PHP
+- name: install php
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - git
+    - php
+    - php-mysql
+    - php-xml
+    - php-mbstring

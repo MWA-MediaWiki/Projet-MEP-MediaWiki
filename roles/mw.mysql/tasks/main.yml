@@ -1,0 +1,96 @@
+---
+# tasks file for mw.mysql
+# MySQL
+- name: install mysql
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - mysql-server
+    - python3-mysqldb
+
+- name: generate new root password
+  command: openssl rand -hex 10
+  args:
+    creates: /root/.my.cnf
+  register: mysql_new_root_pass
+
+- name: remove anonymous users
+  mysql_user:
+    name: ""
+    state: absent
+  when: mysql_new_root_pass.changed
+
+- name: remove test database
+  mysql_db:
+    name: test
+    state: absent
+  when: mysql_new_root_pass.changed
+
+- name: output new root password
+  debug:
+    msg: "New root password is {{ mysql_new_root_pass.stdout }}"
+  when: mysql_new_root_pass.changed
+
+- name: update root password
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    password: "{{ mysql_new_root_pass.stdout }}"
+  loop:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+  when: mysql_new_root_pass.changed
+
+- name: create my.cnf
+  template:
+    src: templates/mysql/my.cnf.j2
+    dest: /root/.my.cnf
+  when: mysql_new_root_pass.changed
+
+
+  # deplacement de la base de donnée
+
+    
+- name: "stop mysql service"
+  service:
+    name: mysql
+    state: stopped
+
+
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: /var/lib/mysql
+    dest: /mnt/log
+    remote_src: yes
+    owner: mysql
+    group: mysql
+    mode: '0700'
+
+- name: stat mysql.bak
+  stat: path=/var/lib/mysql.bak/
+  register: mysql_bak
+
+- name: backup mysql
+  command: mv /var/lib/mysql/ /var/lib/mysql.bak/
+  when: not mysql_bak.stat.exists
+  
+
+- name: "edit mysql.conf"
+  lineinfile:
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^# datadir'
+    line: 'datadir     = /mnt/log/mysql'
+
+- name: "edit apparmor alias"
+  lineinfile:
+    dest: /etc/apparmor.d/tunables/alias
+    regexp: '^alias'
+    line: 'alias /var/lib/mysql/ -> /mnt/log/mysql,'
+
+- name: "restart apparmor"
+  service:
+    name: apparmor
+    state: restarted
