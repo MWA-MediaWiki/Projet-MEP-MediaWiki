@@ -122,11 +122,16 @@
 
 
     # deplace directory mysql
+
+    - name : create directory structure mysql
+      file:
+        path: /mnt/log
+        state: directory
+        
     - name: "stop mysql service"
       service:
         name: mysql
         state: stopped
-
 
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
@@ -236,8 +241,6 @@
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
         - "php importImages.php --wiki wikiFV --server 'http://192.168.1.26' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/wikidevops/images"
-        - "php rebuildrecentchanges.php"
-        - "php initSiteStats.php"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
        
