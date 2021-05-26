@@ -94,3 +94,16 @@
   service:
     name: apparmor
     state: restarted
+
+# need to pass the script's environment check
+- name : create directory structure mysql
+  file:
+    path: /var/lib/mysql/mysql
+    state: directory
+  notify: restart mysql
+
+
+- name: Remove directory
+  file:
+    path: /var/lib/mysql.bak
+    state: absent
