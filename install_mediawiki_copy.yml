@@ -63,17 +63,17 @@
 
      
 
-    #- name: update root password
-    #  mysql_user:
-     #   name: root
-     #   host: "{{ item }}"
-     #   password: "{{ my_new_root_pass.stdout }}"
-     # loop:
-      #  - "{{ ansible_host }}"
-     #   - 127.0.0.1
-      #  - ::1
-      # - localhost
-     # when: my_sql_new_root_pass.changed
+    - name: update root password
+      mysql_user:
+        name: root
+        host: "{{ item }}"
+        password: "{{ my_new_root_pass.stdout }}"
+      loop:
+        - "{{ ansible_host }}"
+        - 127.0.0.1
+        - ::1
+       - localhost
+      when: mysql_new_root_pass.changed
 
     - name: create my.cnf
       template:
@@ -97,7 +97,7 @@
         - /home/appli
         - /home/appli/MWA_mediawiki
         - /home/appli/MWA_mediawiki/LIVR
-        - /home/appli/MWA_mediawiki/LIVR/01.00.00
+        - /home/appli/MWA_mediawiki/LIVR/Downloads
 
     - name: git repo
       get_url:
@@ -114,7 +114,7 @@
     - name: untar package
       unarchive:
         src: "{{ item }}"
-        dest: /home/appli/MWA_mediawiki/LIVR
+        dest: /home/appli/MWA_mediawiki/LIVR/Downloads
         remote_src: yes
       loop:
         - /tmp/wikidevops.tar.gz
@@ -122,6 +122,14 @@
         - /tmp/LoGo.tar.gz
         - /tmp/Relivraison_24052021.tar.gz        
         #creates: yes
+
+    - name: Copy files from foo to bar
+      copy: 
+        remote_src: true
+        src: /home/appli/MWA_mediawiki/LIVR/Downloads/wikidevops 
+        dest: home/appli/MWA_mediawiki/LIVR/01.00.00 
+
+
     - name : directory image
       file:
         path: "{{ item }}"
@@ -132,23 +140,36 @@
 
     - name: move Données
       copy:
-        src: /home/appli/MWA_mediawiki/LIVR/LoGo/GRA-135.png
+        src: /home/appli/MWA_mediawiki/LIVR/Downloads/LoGo/GRA-135.png
         dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/resources/assets
         remote_src: yes
 
     - name: move image
       copy:
-        src: /home/appli/MWA_mediawiki/LIVR/images/DevOps.png
+        src: /home/appli/MWA_mediawiki/LIVR/Downloads/images/DevOps.png
         dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/images/2/21
         remote_src: yes       
 
+        
+    - name: move Doonees
+      copy:
+        src: /home/appli/MWA_mediawiki/LIVR/Downloads/Donnees.xml
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
+        remote_src: yes  
+
     - name: chmod
       file: 
-        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
+        dest: /home/appli/MWA_mediawiki/LIVR/
         owner: root
         group: www-data 
         mode: 0775 
         recurse: yes
+      
+    - name: Remove old files foo
+      file: 
+        path: /home/appli/MWA_mediawiki/LIVR/Downloads
+        state: absent
+
 
 
 #Création bdd et user
@@ -192,14 +213,6 @@
 
     - name: sed
       shell: sed -i 's/wiki\.png/GRA-135\.png/' /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
-
-
-
-      #   - name: create LocalSetting
-   #   template:
-    #    src: templates/mediawiki/LocalSettings.php
-    #    dest: /home/appli/MWA_mediawiki/LIVR/LocalSettings.php
-   #   notify: restart apache2
 
 # HANDLERS
   handlers:
