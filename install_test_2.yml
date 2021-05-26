@@ -8,12 +8,12 @@
     #Création bdd et user
     - name: Create MySQL DB
       mysql_db:
-        name: wikiFV
+        name: wikiBubu
         state: present
 
     - name: Create MySQL user
       mysql_user:
-        name: userwiki
+        name: userwikibubu
         host: localhost
         password: az
         priv: wikiFV.*:ALL
