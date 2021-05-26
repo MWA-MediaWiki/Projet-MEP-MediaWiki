@@ -53,20 +53,20 @@
 
 
   #Création bdd et user
-- name: Create MySQL DB
-  mysql_db:
-    name: wikiLN
-    state: present
+#- name: Create MySQL DB
+#  mysql_db:
+#    name: wikiLN
+#    state: present
 
-- name: Create MySQL user
-  mysql_user:
-    name: userwikiLN
-    host: localhost
-    password: az
-    priv: wikiLN.*:ALL
+#- name: Create MySQL user
+#  mysql_user:
+#    name: userwikiLN
+#    host: localhost
+#    password: az
+#    priv: wikiLN.*:ALL
 
 
-  # deplacement de la base de donnée    
+  # deplacement de la base de donnée
 - name: "stop mysql service"
   service:
     name: mysql
@@ -89,7 +89,7 @@
 - name: backup mysql
   command: mv /var/lib/mysql/ /var/lib/mysql.bak/
   when: not mysql_bak.stat.exists
-  
+
 
 - name: "edit mysql.conf"
   lineinfile:
