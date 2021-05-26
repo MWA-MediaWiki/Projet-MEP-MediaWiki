@@ -6,77 +6,113 @@
     path: "{{ item }}"
     state: directory
   loop:
-    - /home/appli
-    - /home/appli/MWA_mediawiki
-    - /home/appli/MWA_mediawiki/LIVR
-    - /home/appli/MWA_mediawiki/LIVR/01.00.00
+    - "{{dir1}}"
+    - "{{dir2}}"
+    - "{{dir3}}"
+    - "{{dir4}}"
 
 - name: git repo
   get_url:
     url: "{{ item }}"
-    dest: /tmp
+    dest: "{{dirtar}}"
   loop:
-    - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/wikidevops.tar.gz
-    - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/dump_image.tar.gz
-    - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/LoGo.tar.gz
-    - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/Relivraison_24052021.tar.gz
+    - "{{repo_file}}"/wikidevops.tar.gz
+    - "{{repo_file}}"/dump_image.tar.gz
+    - "{{repo_file}}"/LoGo.tar.gz
+    - "{{repo_file}}"/Relivraison_24052021.tar.gz
 
 - name: untar package
   unarchive:
     src: "{{ item }}"
-    dest: /home/appli/MWA_mediawiki/LIVR
+    dest: "{{dir4}}"
     remote_src: yes
   loop:
-    - /tmp/wikidevops.tar.gz
-    - /tmp/dump_image.tar.gz
-    - /tmp/LoGo.tar.gz
-    - /tmp/Relivraison_24052021.tar.gz
+    - "{{dirtar}}"/wikidevops.tar.gz
+    - "{{dirtar}}"/dump_image.tar.gz
+    - "{{dirtar}}"/LoGo.tar.gz
+    - "{{dirtar}}"/Relivraison_24052021.tar.gz
+
+
+- name: Copy files from foo to bar
+  command: "mv {{dir4}}/wikidevops/ {{dir4}}/01.00.00" 
+  args:
+    creates: "{{dir4}}"/01.00.00 
+    removes: "{{dir4}}"/wikidevops/
+
+- name: Copy files from foo to bar
+  command: "mv {{dir4}}/01.00.00/ {{dir3}}/01.00.00"
+
+- name : directory image
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{dir_wm}}"/images/2
+    - "{{dir_wm}}"/images/2/21
 
 - name: move Données
   copy:
-    src: /home/appli/MWA_mediawiki/LIVR/LoGo/GRA-135.png
-    dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/resources/assets
+    src: "{{dir4}}"/LoGo/GRA-135.png
+    dest: "{{dir_wm}}"/resources/assets
     remote_src: yes
 
+- name: move image
+  copy:
+    src: "{{dir4}}"/images/DevOps.png
+    dest: "{{dir_wm}}"/images/2/21
+    remote_src: yes       
+
+        
+- name: move Doonees
+  copy:
+    src: "{{dir4}}"/Donnees.xml
+    dest: "{{dir_wm}}"
+    remote_src: yes  
+
 - name: chmod
-  file:
-    dest: /home/appli/MWA_mediawiki/LIVR/wikidevops
+  file: 
+    dest: "{{dir3}}"
     owner: root
-    group: www-data
-    mode: 0775
+    group: www-data 
+    mode: 0775 
     recurse: yes
+      
+- name: Remove old files foo
+  file: 
+    path: "{{dir4}}"
+    state: absent
+
 
 #Création bdd et user
 - name: Create MySQL DB
   mysql_db:
-    name: wikiLN
+    name: {{mysql_bdd}}
     state: present
 
 - name: Create MySQL user
   mysql_user:
-    name: userwikiLN
+    name: "{{mysql_user}}"
     host: localhost
-    password: az
-    priv: wikiLN.*:ALL
+    password: "{{mysql_pass}}"
+    priv: {{mysql_user}}.*:ALL
 
 - name: création du lien symbolique
   file:
-    src: /home/appli/MWA_mediawiki/LIVR/wikidevops
-    dest: /var/www/html/wikidevops
+    src: {{dir_wm}}
+    dest: /var/www/html/01.00.00
     state: link
   notify: restart apache2
 
 - name: install par script
   command: "{{ item }}"
   loop:
-    - "php install.php --dbname wikiLN --dbuser userwikiLN --dbpass az --dbserver localhost --server 'http://192.168.56.115' --dbtype mysql --wiki wikiLN --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiLN admin"
-    - "php importDump.php --wiki wikiLN --server 'http://192.168.56.115' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
+    - "php install.php --dbname '{{mysql_bdd}}' --dbuser '{{mysql_user}}' --dbpass '{{mysql_pass}}' --dbserver localhost --server '{{ansible_host}}' --dbtype mysql --wiki '{{wiki_nom}}' --pass '{{wiki_pass}}' --lang fr --scriptpath /01.00.00 --confpath '{{dir_wm}}' '{{wiki_nom}}' admin"
+    - "php importDump.php --wiki '{{wiki_nom}}' --server '{{ansible_host}}' --dbuser '{{mysql_user}}' --dbpass '{{mysql_pass}}' '{{dir_wm}}'/Donnees.xml"
     - "php rebuildrecentchanges.php"
     - "php initSiteStats.php"
-    - "php importImages.php --wiki wikiLN --server 'http://192.168.56.115' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
-    - "php importImages.php --wiki wikiLN --server 'http://192.168.56.115' --dbuser userwikiLN --dbpass az /home/appli/MWA_mediawiki/LIVR/images/Devops.png"
+    - "php importImages.php --wiki '{{wiki_nom}}' --server '{{ansible_host}}' --dbuser '{{mysql_user}}' --dbpass '{{mysql_pass}}' '{{dir_wm}}'/images"
   args:
-    chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
+    chdir: "{{dir_wm}}"/maintenance
 
 - name: sed
-  shell: sed -i 's/wiki\.png/GRA-135\.png/' /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
+  shell: sed -i 's/wiki\.png/GRA-135\.png/' "{{dir_wm}}"/LocalSettings.php
