@@ -79,7 +79,7 @@
       mysql_user:
         name: root
         host: "{{ item }}"
-        password: "{{ my_new_root_pass.stdout }}"
+        password: "{{ mysql_new_root_pass.stdout }}"
       loop:
         - "{{ ansible_host }}"
         - 127.0.0.1
