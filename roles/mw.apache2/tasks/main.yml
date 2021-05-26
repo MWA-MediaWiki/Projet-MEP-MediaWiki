@@ -8,5 +8,5 @@
 
 - name: Copy Apache2 conf
   template:
-    src: templates/apache2.conf
+    src: templates/apache2.conf.j2
     dest: /etc/apache2/apache2.conf
