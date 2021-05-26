@@ -40,7 +40,7 @@
     removes: "{{dir4}}/wikidevops/"
 
 - name: Copy files from foo to bar
-  command: "mv {{dir4}}/01.00.00/ {{dir3}}/01.00.00"
+  command: "mv {{dir4}}/01.00.00/ {{dir3}}/"
 
 - name : directory image
   file:
