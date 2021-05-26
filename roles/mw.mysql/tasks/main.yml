@@ -50,6 +50,18 @@
     dest: /root/.my.cnf
   when: mysql_new_root_pass.changed
 
+#Création bdd et user
+- name: Create MySQL DB
+  mysql_db:
+    name: "{{mysql_bdd}}"
+    state: present
+
+- name: Create MySQL user
+  mysql_user:
+    name: "{{mysql_user}}"
+    host: localhost
+    password: "{{mysql_pass}}"
+    priv: "{{mysql_bdd}}.*:ALL"
 
   # deplacement de la base de donnée
 - name: "stop mysql service"
