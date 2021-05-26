@@ -1,0 +1,7 @@
+---
+# vars file for mw.mediawiki
+dirtar=/tmp
+repo_file=https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Andres-develop/INPUT/PACKAGE/
+wiki_nom=wikiFV
+wiki_pass=azerty123admin
+...

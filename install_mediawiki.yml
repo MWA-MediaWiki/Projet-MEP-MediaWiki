@@ -1,0 +1,183 @@
+---
+
+- name : installation de mediawiki
+  become: true
+  hosts: mediawiki
+  tasks:
+
+# UPDATE
+    - name: update
+      apt:
+        name: "*"
+        state: latest
+
+# UPGRADE
+    - name: upgrade
+      apt:
+        name: "*"
+        state: latest
+
+# UNZIP
+#    - name: install unzip package
+#      package:
+#        name: unzip
+#        state: present
+
+# PHP et GIT
+    - name: install php et git
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php
+        - php-mysql
+        - php-xml
+        - php-mbstring
+        - git
+
+# MySQL
+    - name: install mysql
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - mysql-server
+        - python3-mysqldb
+
+    - name: generate new root password
+      command: openssl rand -hex 10
+      args:
+        creates: /root/.my.cnf
+      register: mysql_new_root_pass
+
+    - name: remove anonymous users
+      mysql_user:
+        name: ""
+        state: absent
+      when: mysql_new_root_pass.changed
+
+    - name: remove test database
+      mysql_db:
+        name: test
+        state: absent
+      when: mysql_new_root_pass.changed
+
+    - name: output new root password
+      debug:
+        msg: "New root password is {{mysql_new_root_pass.stdout}}"
+      when: mysql_new_root_pass.changed
+
+#    - name: update root password
+
+    - name: create my.cnf
+      template:
+        src: templates/mysql/my.cnf.j2
+        dest: /root/.my.cnf
+      when: mysql_new_root_pass.changed
+
+# APACHE
+    - name: install apache2
+      package:
+        name: apache2
+        state: present
+
+    - name: create apache2 config
+      template:
+        src: templates/apache2/default.j2
+        dest: /etc/apache2/sites-available/default
+      notify: restart apache2
+
+#    - name: create project folder
+
+# MEDIAWIKI
+#    - name: git clone du projet mediawiki
+#      ansible.builtin.git:
+#        repo: https://github.com/Bubu25/Projet-MEP-MediaWiki.git
+#        branch: Lyndsey-develop
+#        single_branch: yes
+#        dest: /home/lindsey/projet
+
+    - name : directory appli
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /home/appli
+        - /home/appli/MWA_mediawiki
+        - /home/appli/MWA_mediawiki/LIVR
+        - /home/appli/MWA_mediawiki/LIVR/01.00.00
+
+    - name: git repo
+      uri:
+        url: "{{ item }}"
+        return_content: true
+        dest: /home/appli/MWA_mediawiki/LIVR
+      loop:
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/wikidevops.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/dump_image.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/LoGo.tar.gz
+        - https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE/Donnees.xml
+
+    - name: untar package
+      unarchive:
+        src: "{{ item }}"
+        dest: /home/appli/MWA_mediawiki/LIVR
+        remote_src: yes
+      loop:
+        - /home/appli/MWA_mediawiki/LIVR/wikidevops.tar.gz
+        - /home/appli/MWA_mediawiki/LIVR/dump_image.tar.gz
+        - /home/appli/MWA_mediawiki/LIVR/LoGo.tar.gz
+      #register: wp_checksum
+
+#Création bdd et user
+    - name: Create MySQL DB
+      mysql_db:
+        name: wikiFV
+        state: present
+
+    - name: Create MySQL user
+      mysql_user:
+        name: userwiki
+        host: localhost
+        password: az
+        priv: wikiFV.*:ALL
+
+    - name: création du lien symbolique
+      file:
+        src: /home/appli/MWA_mediawiki/LIVR/wikidevops
+        dest: /var/www/html/wikidevops
+        state: link
+      notify: restart apache2
+
+    - name: install par script
+      command: "{{ item }}"
+      loop:
+        - "php install.php --dbname wikiFV --dbuser userwiki --dbpass az --dbserver localhost --server 'http://192.168.56.115' --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiFV admin"
+        - "php importDump.php --wiki wikiFV --server 'http://192.168.56.115' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
+        - "php rebuildrecentchanges.php"
+        - "php initSiteStats.php"
+        - "php importImages.php --wiki wikiFV --server 'http://192.168.56.115' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/images"
+      args:
+        chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
+
+    - name: sed
+      shell: sed -i 's/wiki\.png/GRA-135\.png/' /home/appli/MWA_mediawiki/LIVR/wikidevops/LocalSettings.php
+
+    - name: create LocalSetting
+      template:
+        src: templates/mediawiki/LocalSettings.php
+        dest: /home/appli/MWA_mediawiki/LIVR/LocalSettings.php
+      notify: restart apache2
+
+      #   - name: create LocalSetting
+   #   template:
+    #    src: templates/mediawiki/LocalSettings.php
+    #    dest: /home/appli/MWA_mediawiki/LIVR/LocalSettings.php
+   #   notify: restart apache2
+
+# HANDLERS
+  handlers:
+    - name: restart apache2
+      service:
+        name: apache2
+        state : restarted

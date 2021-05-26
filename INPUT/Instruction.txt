@@ -1,0 +1,40 @@
+################################################################################
+Souche: mediawiki 1.35.2
+################################################################################
+A) INFRASTRUCTURE:
+
+    OS: UBUNTU 20.04
+        Espace disque: 20 Go
+        Mémoire: 2 GO
+
+    Webserver: APACHE2 2.4.41
+    PHP: PHP 8
+    Base de données: MYSQL 8.0.25 (dernière version)
+    Firewall activé
+
+    1) Le serveur Web, la BDD et le firewall doivent être configuré pour être démarré lors de la mise sous tension de la VM
+
+B) CONFIGURATION DES INSTANCES:
+
+    1) Configuration du Webserver:
+     - Les statiques contenus dans le package wiki_devops.tar.gz doivent être déposés dans un FS respectant la norme fournie
+     - Les logs du webserver doivent être situées dans un FS respectant la norme fournie
+    2) Une instance de base de données <WIKI_DB> doit être crée avec un utilisateur dédié au wiki <WIKI_DB_USER> identifié par le mot de passe <WIKI_DB_PASSWD> ayant les droits necessaires sur l'instance
+     - Les données de l'instance doivent être situées dans un FS respectant la norme fournie
+     - Optionnel: Les logs de l'instance  doivent être situées dans un FS respectant la norme fournie
+
+C) INSTALLATION DU WIKI:
+
+    1) Création d'un répertoire de livraison respectant la norme fournie
+    2) Dépose du package (qui aura au préalable été réadapté selon les normes fournies)
+    3) Installer le wiki à l'aide du script install.php situé dans le répertoire maintenance à la racine du package.
+    4) Réaliser l'import des données (fichier Donnees.xml) à l'aide du script maintenance/importDump.php et du script maintenance/rebuildrecentchanges.php
+    5) Réaliser l'import des images situées dans le fichier dump_image.tar.gz à l'aide du script maintenance/importImages.php
+    6) Mettre en place le logo de votre groupe contenu dans le package LoGo.tar.gz (le déposer dans le répertoire ressource/assets/ et configurer le fichier LocalSettings.php)
+
+AIDE:
+Source déplacement DATADIR Mysql https://www.digitalocean.com/community/tutorials/how-to-move-a-mysql-data-directory-to-a-new-location-on-ubuntu-16-04
+
+E) REMARQUES/INFO COMPLEMENTAIRES
+
+   1) Les éventuels filesystems pourront être crées lors de la création de la VM. 
