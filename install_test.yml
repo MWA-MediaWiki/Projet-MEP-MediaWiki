@@ -227,13 +227,7 @@
         state: link
       notify: restart apache2
 
-    - name: install par script
-      command: "{{ item }}"
-      loop:
-       - "php install.php --dbname wikidb --dbuser userwiki --dbpass password --dbserver localhost --server 'http://192.168.1.26' --dbtype mysql --wiki wikiFV --pass azerty123admin --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops wikiFV admin"
-      args:
-        chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
-
+   
 # HANDLERS
   handlers:
     - name: restart apache2
