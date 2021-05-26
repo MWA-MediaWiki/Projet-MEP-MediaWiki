@@ -211,6 +211,18 @@
         - /tmp/Relivraison_24052021.tar.gz        
         #creates: yes
 
+    - name: move Données
+      copy:
+        src: /home/appli/MWA_mediawiki/LIVR/LoGo/GRA-135.png
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/resources/assets
+        remote_src: yes
+
+    - name: move image
+      copy:
+        src: /home/appli/MWA_mediawiki/LIVR/images/DevOps.png
+        dest: /home/appli/MWA_mediawiki/LIVR/wikidevops/images
+        remote_src: yes
+
     - name: chmod
       file: 
         dest: /home/appli/MWA_mediawiki/LIVR/
