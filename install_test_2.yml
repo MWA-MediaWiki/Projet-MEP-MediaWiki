@@ -20,8 +20,8 @@
         - "php importDump.php --wiki wikiFV --server 'http://192.168.1.26' --dbuser userwiki --dbpass az /home/appli/MWA_mediawiki/LIVR/Donnees.xml"
         - "php rebuildrecentchanges.php"
         - "php initSiteStats.php"
-    args:
-      chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
+      args:
+        chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
         
   args:
     chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
