@@ -32,6 +32,19 @@
     - "{{dirtar}}/LoGo.tar.gz"
     - "{{dirtar}}/Relivraison_24052021.tar.gz"
 
+#Création bdd et user
+- name: Create MySQL DB
+  mysql_db:
+    name: "{{mysql_bdd}}"
+    state: present
+
+- name: Create MySQL user
+  mysql_user:
+    name: "{{mysql_user}}"
+    host: localhost
+    password: "{{mysql_pass}}"
+    priv: "{{mysql_bdd}}.*:ALL"
+
 
 - name: Copy files from foo to bar
   command: "mv {{dir4}}/wikidevops/ {{dir4}}/01.00.00"
