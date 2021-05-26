@@ -6,7 +6,6 @@ pipeline {
             steps {
                 echo 'mise à jour et mise à niveau'
                 sh 'apt update'
-                sh 'apt upgrade'
             }
         }
         stage('installation de php') {
