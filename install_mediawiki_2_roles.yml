@@ -8,7 +8,7 @@
     - role: mw.mysql
       mysql_bdd: wikiLN
       mysql_user: userwikiLN
-      mysql_pass: az
+      mysql_pass: az    
     - role: mw.apache2
     - role: mw.mediawiki
       dir1: /home/appli
