@@ -7,10 +7,10 @@
 
 #APT-UPDATE et UPGRADE
 # UPDATE
-    - name: update
-      apt:
-        name: "*"
-        state: latest
+    # - name: update
+    #   apt:
+    #     name: "*"
+    #     state: latest
 # UPGRADE
     - name: upgrade
       apt:
