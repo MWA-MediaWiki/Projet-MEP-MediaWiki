@@ -8,16 +8,15 @@
     - role: mw.mysql
     - role: mw.apache2
     - role: mw.mediawiki
-      vars:
-        dir1=/home/appli
-        dir2={{dir1}}/MWA_mediawiki
-        dir3={{dir2}}/LIVR
-        dir4={{dir3}}/Downloads
-        dir_wm={{dir3}}/01.00.00
-        mysql_bdd=wikiLN
-        mysql_user=userwikiLN
-        mysql_pass=az
-        dirtar=/tmp
-        repo_file=https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE
-        wiki_nom=wikiLN
-        wiki_pass=azerty123admin
+      dir1=/home/appli
+      dir2={{dir1}}/MWA_mediawiki
+      dir3={{dir2}}/LIVR
+      dir4={{dir3}}/Downloads
+      dir_wm={{dir3}}/01.00.00
+      mysql_bdd=wikiLN
+      mysql_user=userwikiLN
+      mysql_pass=az
+      dirtar=/tmp
+      repo_file=https://github.com/Bubu25/Projet-MEP-MediaWiki/raw/Lyndsey-develop/INPUT/PACKAGE
+      wiki_nom=wikiLN
+      wiki_pass=azerty123admin
