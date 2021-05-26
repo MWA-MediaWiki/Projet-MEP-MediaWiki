@@ -126,7 +126,7 @@
     - name: Copy files from foo to bar
       copy: 
         remote_src: true
-        src: /home/appli/MWA_mediawiki/LIVR/Downloads/wikidevops 
+        src: /home/appli/MWA_mediawiki/LIVR/Downloads/wikidevops/* 
         dest: /home/appli/MWA_mediawiki/LIVR/01.00.00 
 
 
