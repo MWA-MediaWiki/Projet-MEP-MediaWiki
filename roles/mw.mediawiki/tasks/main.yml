@@ -107,7 +107,7 @@
     - "php importDump.php --wiki {{wiki_nom}} --server 'http://{{ansible_host}}' --dbuser {{mysql_user}} --dbpass {{mysql_pass}} {{mediawiki}}/Donnees.xml"
     - "php rebuildrecentchanges.php"
     - "php initSiteStats.php"
-    - "php importImages.php --wiki {{wiki_nom}} --server 'http://{{ansible_host}}' --dbuser {{mysql_user}} --dbpass {{mysql_pass}} {{mediawiki}}/images/2/21"
+    - "php importImages.php {{mediawiki}}/images"
   args:
     chdir: "{{mediawiki}}/maintenance"
 
