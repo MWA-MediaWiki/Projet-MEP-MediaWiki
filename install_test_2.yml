@@ -6,9 +6,7 @@
   tasks:
         
     - name: install par script
-      command: "{{ item }}"
-      loop:
-        - "php install.php --dbname wikiLN --dbuser userwikiLN --dbpass az --dbserver localhost --server 'http://192.168.1.26' --dbtype mysql  --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops --pass azerty123admin wikiLN admin"
+      command: "php install.php --dbname wikiLN --dbuser userwikiLN --dbpass az --dbserver localhost --server 'http://192.168.1.26' --dbtype mysql  --lang fr --scriptpath /wikidevops --confpath /home/appli/MWA_mediawiki/LIVR/wikidevops --pass azerty123admin wikiLN admin"
       args:
         chdir: /home/appli/MWA_mediawiki/LIVR/wikidevops/maintenance
 
