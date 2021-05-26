@@ -6,15 +6,15 @@
     name: apache2
     state: present
 
-- name: www-data
-  ansible.builtin.user:
-    name: www-data
-    uid: 1101
+#- name: www-data
+#  ansible.builtin.user:
+#    name: www-data
+#    uid: 1101
 
-- name: www-data
-  ansible.builtin.group:
-    name: www-data
-    gid: 1100
+#- name: www-data
+#  ansible.builtin.group:
+#    name: www-data
+#    gid: 1100
 
 - name: Copy Apache2 conf
   template:
