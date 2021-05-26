@@ -20,4 +20,13 @@
   template:
     src: templates/apache2/apache2.conf.j2
     dest: /etc/apache2/apache2.conf
+
+- name: Copy conf site
+  template:
+    src: templates/apache2/mediawiki.conf.j2
+    dest: /etc/apache2/sites-available/mediawiki.conf
+  notify: restart apache2
+
+- name: Enable site
+  command: "a2ensite mediawiki.conf.j2"
   notify: restart apache2
