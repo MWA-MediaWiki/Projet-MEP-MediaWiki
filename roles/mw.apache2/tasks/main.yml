@@ -27,6 +27,4 @@
     dest: /etc/apache2/sites-available/mediawiki.conf
   notify: restart apache2
 
-- name: Enable site
-  command: "a2ensite mediawiki.conf"
-  notify: restart apache2
+
